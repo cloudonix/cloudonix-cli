@@ -16,7 +16,7 @@ module.exports = {
     console.log("  --pkey <string> | --pkey=<string>        A tenant profile key");
     console.log("  --pvalue <string> | --pvalue=<string>    A tenant profile value for the defined profile --pkey");
     console.log("                                           You may define a SINGLE pkey/pvalue pair per command\nexecution");
-    console.log("  --keyname <string> | --keyname=<string>  An API key name (used with --genkey/--delkey commands");
+    console.log("  --keyname <string> | --keyname=<string>  An API key name (used with --genkey/--delkey commands)");
     console.log("");
     console.log("Examples:");
     console.log(" - Get tenant information for ID 344");
@@ -44,7 +44,7 @@ module.exports = {
     console.log("  --update    Update a domain object's profile");
     console.log("  --enable    Set the domain as enabled");
     console.log("  --disable   Set the domain as disabled");
-    console.log("  --genkey    Generate a new Tenant API key and set its name as --keyname");
+    console.log("  --genkey    Generate a new domain API key and set its name as --keyname");
     console.log("  --delkey    Delete an API key with the name --keyname");
     console.log("  --help      Display additional information about a specific datamodel command");
     console.log("");
@@ -57,6 +57,7 @@ module.exports = {
                 "                                           to set as the default domain application");
     console.log("  --appurl <string> | --appurl=<string>    A URL representing a remote CXML application to set as the\n" +
                 "                                           default domain application");
+    console.log("  --keyname <string> | --keyname=<string>  An API key name (used with --genkey/--delkey commands)");
     console.log("  --pkey <string> | --pkey=<string>        A domain profile key");
     console.log("  --pvalue <string> | --pvalue=<string>    A domain profile value for the defined profile --pkey");
     console.log("                                           You may define a SINGLE pkey/pvalue pair per command\n" +
@@ -159,6 +160,7 @@ module.exports = {
     console.log("  --name <string> | --name=<string>           A string value for the application name");
     console.log("  --appurl <string> | --appurl=<string>       A URL representing a remote application");
     console.log("  --type <string> | --type=<string>           Application language [cloudonix|twiml]");
+    console.log("  --keyname <string> | --keyname=<string>  An API key name (used with --genkey/--delkey commands)");
     console.log("  --pkey <string> | --pkey=<string>           A trunk profile key");
     console.log("  --pvalue <string> | --pvalue=<string>       A trunk profile value for the defined --pkey");
     console.log("                                              You may define a SINGLE pkey/pvalue pair per command\n" +
