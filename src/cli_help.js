@@ -225,10 +225,10 @@ module.exports = {
     console.log("  --domainid <number> | --domainid=<number>   Cloudonix domain ID, or");
     console.log("  --domain <number> | --domain=<number>       Cloudonix domain name");
     console.log("");
-    console.log("  \x1b[--get|--delete|--update|--enable|--disable\x1b[0m:");
+    console.log("  \x1b[32m--get|--delete|--update|--enable|--disable\x1b[0m:");
     console.log("  --id <number> | --id=<number>               Numeric subscriber ID");
     console.log("");
-    console.log("  \x1b[--create|--update\x1b[0m:");
+    console.log("  \x1b[32m--create|--update\x1b[0m:");
     console.log("  --msisdn <string> | --msisdn=<string>       A subscriber MSISDN (Phone number)");
     console.log("  --secret <string> | --secret=<string>       An assigned password (SIP registration)");
     console.log("  --gensecret <number> | --gensecret=<number> Generate a password, <number> long (SIP registration)");
@@ -247,6 +247,44 @@ module.exports = {
     process.exit(-1);
   },
   help_users: function () {
+    console.log("");
+    console.log("Usage: cloudonix-cli \x1b[36m--users \x1b[32m<command> \x1b[33m<parameters>\x1b[0m");
+    console.log("");
+    console.log("Where \x1b[32m<command>\x1b[0m is one of the following:");
+    console.log("  --list      List the a subscribers objects of a specific domain");
+    console.log("  --get       Get a subscriber object information");
+    console.log("  --create    Create a new subscriber object");
+    console.log("  --delete    Delete a subscriber object");
+    console.log("  --update    Update a subscriber object's profile");
+    console.log("  --enable    Set the application as enabled");
+    console.log("  --disable   Set the application as disabled");
+    console.log("  --help      Display additional information about a specific datamodel command");
+    console.log("");
+    console.log("Where \x1b[33m<parameters>\x1b[0m may be one (or more) of the following:");
+    console.log("");
+    console.log("  \x1b[32mMandatory\x1b[0m:");
+    console.log("  --domainid <number> | --domainid=<number>   Cloudonix domain ID, or");
+    console.log("  --domain <number> | --domain=<number>       Cloudonix domain name");
+    console.log("");
+    console.log("  \x1b[--get|--delete|--update|--enable|--disable\x1b[0m:");
+    console.log("  --id <number> | --id=<number>               Numeric subscriber ID");
+    console.log("");
+    console.log("  \x1b[--create|--update\x1b[0m:");
+    console.log("  --msisdn <string> | --msisdn=<string>       A subscriber MSISDN (Phone number)");
+    console.log("  --secret <string> | --secret=<string>       An assigned password (SIP registration)");
+    console.log("  --gensecret <number> | --gensecret=<number> Generate a password, <number> long (SIP registration)");
+    console.log("  --pkey <string> | --pkey=<string>           A subscriber profile key");
+    console.log("  --pvalue <string> | --pvalue=<string>       A subscriber profile value for the defined --pkey");
+    console.log("                                              You may define a SINGLE pkey/pvalue pair per command\n" +
+      "                                              execution");
+    console.log("");
+    console.log("Examples:");
+    console.log(" - List subscribers for mydomain.cloudonix.net domain");
+    console.log("   `cloudonix-cli --subscribers --list --domain=mydomain.cloudonix.net`");
+    console.log("");
+    console.log(" - Create subscriber for mydomain.cloudonix.net domain");
+    console.log("   `cloudonix-cli --subscribers --create --domain=mydomain.cloudonix.net \\\n" +
+      "    --msisdn=12127777777 --gensecret=24 `");
     process.exit(-1);
   },
   help_dnids: function () {
