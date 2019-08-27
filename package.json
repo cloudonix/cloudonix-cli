@@ -1,0 +1,30 @@
+{
+  "name": "@nir.simionovich/cloudonix-cli",
+  "version": "0.1.0",
+  "description": "A CLI tool for the Cloudonix API.Core",
+  "main": "src/index.js",
+  "bin": {
+    "@nir.simionovich/cloudonix-cli": "bin/cloudonix-cli",
+    "cloudonix-cli": "bin/cloudonix-cli"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cli",
+    "cloudonix"
+  ],
+  "author": "Nir Simionovich",
+  "license": "MIT",
+  "dependencies": {
+    "arg": "^4.1.1",
+    "chalk": "^2.4.2",
+    "dotenv": "^8.1.0",
+    "esm": "^3.2.25",
+    "inquirer": "^7.0.0",
+    "ncp": "^2.0.0"
+  }
+}
