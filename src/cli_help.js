@@ -1,10 +1,22 @@
+/**
+ *  ██████╗██╗      ██████╗ ██╗   ██╗██████╗  ██████╗ ███╗   ██╗██╗██╗  ██╗
+ * ██╔════╝██║     ██╔═══██╗██║   ██║██╔══██╗██╔═══██╗████╗  ██║██║╚██╗██╔╝
+ * ██║     ██║     ██║   ██║██║   ██║██║  ██║██║   ██║██╔██╗ ██║██║ ╚███╔╝
+ * ██║     ██║     ██║   ██║██║   ██║██║  ██║██║   ██║██║╚██╗██║██║ ██╔██╗
+ * ╚██████╗███████╗╚██████╔╝╚██████╔╝██████╔╝╚██████╔╝██║ ╚████║██║██╔╝ ██╗
+ *  ╚═════╝╚══════╝ ╚═════╝  ╚═════╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
+ *
+ * Project: cloudonix-cli | cli_help.js
+ * Creator: Nir Simionovich <nirs@cloudonix.io> | 2019-08-27
+ */
+
 module.exports = {
   help_tenant: function () {
     console.log("");
     console.log("Usage: cloudonix-cli \x1b[36m--tenant \x1b[32m<command> \x1b[33m<parameters>\x1b[0m");
     console.log("");
     console.log("Where \x1b[32m<command>\x1b[0m is one of the following:");
-    console.log("  --get       Get the tenants datamodel object");
+    console.log("  --get       Get a tenants datamodel object");
     console.log("  --update    Update a tenants profile datamodel object");
     console.log("  --genkey    Generate a new Tenant API key and set its name as --keyname");
     console.log("  --delkey    Delete an API key with the name --keyname");
@@ -12,16 +24,17 @@ module.exports = {
     console.log("");
     console.log("Where \x1b[33m<parameters>\x1b[0m may be one (or more) of the following:");
     console.log("");
-    console.log("  \x1b[32mMandatory\x1b[0m:");
+    console.log("  \x1b[33mMandatory\x1b[0m:");
     console.log("  --id <number> | --id=<number>            Numeric tenant ID number, or");
-    console.log("  --name <string> | --name=<string>        A string value to identify the tenant");
+    console.log("  --name <string> | --name=<string>        A string value to identify the tenant, or");
+    console.log("  --self                                   Set tenant ID to the one associated with the API key [default]")
     console.log("");
-    console.log("  \x1b[32m--update\x1b[0m:");
+    console.log("  \x1b[33m--update\x1b[0m:");
     console.log("  --pkey <string> | --pkey=<string>        A tenant profile key");
     console.log("  --pvalue <string> | --pvalue=<string>    A tenant profile value for the defined profile --pkey");
     console.log("                                           You may define a SINGLE pkey/pvalue pair per command\n" +
                 "                                           execution");
-    console.log("  \x1b[32m--genkey|--delkey\x1b[0m:");
+    console.log("  \x1b[33m--genkey|--delkey\x1b[0m:");
     console.log("  --keyname <string> | --keyname=<string>  An API key name (used with --genkey/--delkey commands)");
     console.log("");
     console.log("Examples:");
@@ -56,11 +69,11 @@ module.exports = {
     console.log("");
     console.log("Where \x1b[33m<parameters>\x1b[0m may be one (or more) of the following:");
     console.log("");
-    console.log("  \x1b[32m--get|--update|--delete|--enable|--disable|--genkey|--delkey\x1b[0m:");
+    console.log("  \x1b[33m--get|--update|--delete|--enable|--disable|--genkey|--delkey\x1b[0m:");
     console.log("  --id <number> | --id=<number>            Numeric domain ID");
     console.log("  --name <string> | --name=<string>        A string value for the domain name");
     console.log("");
-    console.log("  \x1b[32m--create|--update\x1b[0m:");
+    console.log("  \x1b[33m--create|--update\x1b[0m:");
     console.log("  --app <string> | --app=<string>          A string value representing a hosted (lambda) application\n" +
                 "                                           name, to set as the default domain application");
     console.log("  --appid <number> | --appid=<number>      A number value representing hosted (lambda) application ID,\n" +
@@ -72,7 +85,7 @@ module.exports = {
     console.log("                                           You may define a SINGLE pkey/pvalue pair per command\n" +
                 "                                           execution");
     console.log("");
-    console.log("  \x1b[32m--genkey|--delkey\x1b[0m:");
+    console.log("  \x1b[33m--genkey|--delkey\x1b[0m:");
     console.log("  --keyname <string> | --keyname=<string>  An API key name (used with --genkey/--delkey commands)");
     console.log("");
     console.log("Some words about domain profile key/value pairs:");
@@ -125,15 +138,15 @@ module.exports = {
     console.log("");
     console.log("Where \x1b[33m<parameters>\x1b[0m may be one (or more) of the following:");
     console.log("");
-    console.log("  \x1b[32mMandatory\x1b[0m:");
+    console.log("  \x1b[33mMandatory\x1b[0m:");
     console.log("  --domainid <number> | --domainid=<number>     Cloudonix domain ID, or");
     console.log("  --domain <number> | --domain=<number>         Cloudonix domain name");
     console.log("");
-    console.log("  \x1b[32m--get|--update|--delete\x1b[0m:");
+    console.log("  \x1b[33m--get|--update|--delete\x1b[0m:");
     console.log("  --id <number> | --id=<number>                 Numeric trunk ID");
     console.log("  --name <string> | --name=<string>             A string value for the trunk name");
     console.log("");
-    console.log("  \x1b[32m--create|--update\x1b[0m:");
+    console.log("  \x1b[33m--create|--update\x1b[0m:");
     console.log("  --transport <string> | --transport=<string>   The trunk transport [udp|tcp|tls]");
     console.log("  --address <string> | --address=<string>       The trunk IP address or FQDN");
     console.log("  --port <number> | --port=<number>             The trunk IP PORT [5060]");
@@ -173,17 +186,17 @@ module.exports = {
     console.log("");
     console.log("Where \x1b[33m<parameters>\x1b[0m may be one (or more) of the following:");
     console.log("");
-    console.log("  \x1b[32mMandatory\x1b[0m:");
+    console.log("  \x1b[33mMandatory\x1b[0m:");
     console.log("  --domainid <number> | --domainid=<number>   Cloudonix domain ID, or");
     console.log("  --domain <number> | --domain=<number>       Cloudonix domain name");
     console.log("");
-    console.log("  \x1b[32m--get|--update|--delete|--enable|--disable|--getkey|--delkey\x1b[0m:");
+    console.log("  \x1b[33m--get|--update|--delete|--enable|--disable|--getkey|--delkey\x1b[0m:");
     console.log("  --id <number> | --id=<number>               Numeric application ID");
     console.log("");
-    console.log("  \x1b[32m--create|--get|--update|--delete|--enable|--disable|--getkey|--delkey\x1b[0m:");
+    console.log("  \x1b[33m--create|--get|--update|--delete|--enable|--disable|--getkey|--delkey\x1b[0m:");
     console.log("  --name <string> | --name=<string>           A string value for the application name");
     console.log("");
-    console.log("  \x1b[32m--update|--create\x1b[0m:");
+    console.log("  \x1b[33m--update|--create\x1b[0m:");
     console.log("  --appurl <string> | --appurl=<string>       A URL representing a remote application");
     console.log("  --type <string> | --type=<string>           Application language [cloudonix|twiml]");
     console.log("  --pkey <string> | --pkey=<string>           A trunk profile key");
@@ -191,7 +204,7 @@ module.exports = {
     console.log("                                              You may define a SINGLE pkey/pvalue pair per command\n" +
                 "                                              execution");
     console.log("  \x1b[32m--genkey|--delkey\x1b[0m:");
-    console.log("  --keyname <string> | --keyname=<string>  An API key name (used with --genkey/--delkey commands)");
+    console.log("  --keyname <string> | --keyname=<string>     An API key name (used with --genkey/--delkey commands)");
     console.log("");
     console.log("Examples:");
     console.log(" - List my applications");
@@ -221,14 +234,14 @@ module.exports = {
     console.log("");
     console.log("Where \x1b[33m<parameters>\x1b[0m may be one (or more) of the following:");
     console.log("");
-    console.log("  \x1b[32mMandatory\x1b[0m:");
+    console.log("  \x1b[33mMandatory\x1b[0m:");
     console.log("  --domainid <number> | --domainid=<number>   Cloudonix domain ID, or");
     console.log("  --domain <number> | --domain=<number>       Cloudonix domain name");
     console.log("");
-    console.log("  \x1b[32m--get|--delete|--update|--enable|--disable\x1b[0m:");
+    console.log("  \x1b[33m--get|--delete|--update|--enable|--disable\x1b[0m:");
     console.log("  --id <number> | --id=<number>               Numeric subscriber ID");
     console.log("");
-    console.log("  \x1b[32m--create|--update\x1b[0m:");
+    console.log("  \x1b[33m--create|--update\x1b[0m:");
     console.log("  --msisdn <string> | --msisdn=<string>       A subscriber MSISDN (Phone number)");
     console.log("  --secret <string> | --secret=<string>       An assigned password (SIP registration)");
     console.log("  --gensecret <number> | --gensecret=<number> Generate a password, <number> long (SIP registration)");
@@ -246,48 +259,11 @@ module.exports = {
                 "    --msisdn=12127777777 --gensecret=24 `");
     process.exit(-1);
   },
-  help_users: function () {
-    console.log("");
-    console.log("Usage: cloudonix-cli \x1b[36m--users \x1b[32m<command> \x1b[33m<parameters>\x1b[0m");
-    console.log("");
-    console.log("Where \x1b[32m<command>\x1b[0m is one of the following:");
-    console.log("  --list      List the a subscribers objects of a specific domain");
-    console.log("  --get       Get a subscriber object information");
-    console.log("  --create    Create a new subscriber object");
-    console.log("  --delete    Delete a subscriber object");
-    console.log("  --update    Update a subscriber object's profile");
-    console.log("  --enable    Set the application as enabled");
-    console.log("  --disable   Set the application as disabled");
-    console.log("  --help      Display additional information about a specific datamodel command");
-    console.log("");
-    console.log("Where \x1b[33m<parameters>\x1b[0m may be one (or more) of the following:");
-    console.log("");
-    console.log("  \x1b[32mMandatory\x1b[0m:");
-    console.log("  --domainid <number> | --domainid=<number>   Cloudonix domain ID, or");
-    console.log("  --domain <number> | --domain=<number>       Cloudonix domain name");
-    console.log("");
-    console.log("  \x1b[--get|--delete|--update|--enable|--disable\x1b[0m:");
-    console.log("  --id <number> | --id=<number>               Numeric subscriber ID");
-    console.log("");
-    console.log("  \x1b[--create|--update\x1b[0m:");
-    console.log("  --msisdn <string> | --msisdn=<string>       A subscriber MSISDN (Phone number)");
-    console.log("  --secret <string> | --secret=<string>       An assigned password (SIP registration)");
-    console.log("  --gensecret <number> | --gensecret=<number> Generate a password, <number> long (SIP registration)");
-    console.log("  --pkey <string> | --pkey=<string>           A subscriber profile key");
-    console.log("  --pvalue <string> | --pvalue=<string>       A subscriber profile value for the defined --pkey");
-    console.log("                                              You may define a SINGLE pkey/pvalue pair per command\n" +
-      "                                              execution");
-    console.log("");
-    console.log("Examples:");
-    console.log(" - List subscribers for mydomain.cloudonix.net domain");
-    console.log("   `cloudonix-cli --subscribers --list --domain=mydomain.cloudonix.net`");
-    console.log("");
-    console.log(" - Create subscriber for mydomain.cloudonix.net domain");
-    console.log("   `cloudonix-cli --subscribers --create --domain=mydomain.cloudonix.net \\\n" +
-      "    --msisdn=12127777777 --gensecret=24 `");
+  help_dnids: function () {
     process.exit(-1);
   },
-  help_dnids: function () {
+  help_config: function () {
+    console.log("config help");
     process.exit(-1);
   },
   help_general: function (errorMessage='') {
@@ -305,6 +281,7 @@ module.exports = {
     console.log("  -d|--dnids         DNIDs datamodel");
     console.log("  -s|--subscribers   Subscribers datamodel");
     console.log("  -u|--users         Users datamodel");
+    console.log("  -c|--config        Configure cloudonix-cli environment file (~/.env.cloudonix.cli)");
     console.log("");
     console.log("Where <command> is one of the following:");
     console.log("  --list             List datamodel objects");

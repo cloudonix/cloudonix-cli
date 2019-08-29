@@ -1,11 +1,30 @@
+/**
+ *  ██████╗██╗      ██████╗ ██╗   ██╗██████╗  ██████╗ ███╗   ██╗██╗██╗  ██╗
+ * ██╔════╝██║     ██╔═══██╗██║   ██║██╔══██╗██╔═══██╗████╗  ██║██║╚██╗██╔╝
+ * ██║     ██║     ██║   ██║██║   ██║██║  ██║██║   ██║██╔██╗ ██║██║ ╚███╔╝
+ * ██║     ██║     ██║   ██║██║   ██║██║  ██║██║   ██║██║╚██╗██║██║ ██╔██╗
+ * ╚██████╗███████╗╚██████╔╝╚██████╔╝██████╔╝╚██████╔╝██║ ╚████║██║██╔╝ ██╗
+ *  ╚═════╝╚══════╝ ╚═════╝  ╚═════╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
+ *
+ * Project: cloudonix-cli | cli.js
+ * Creator: Nir Simionovich <nirs@cloudonix.io> | 2019-08-27
+ */
+
 import arg from "arg";
 
+const fs = require('fs');
+const environmentFilename = '.env.cloudonix.cli';
+
+/* Helpers and Modules */
 var help = require('./cli_help');
+var config = require('./cli_config');
+var tenant = require('./module_tenant');
 
 function parseCommandLineArguments(rawArgs) {
 
-  var result = {}
+  var result = {};
 
+  /* What datamodel are we going to work with? */
   const datamodelArgs = arg(
     {
       '--tenant': Boolean,
@@ -14,14 +33,14 @@ function parseCommandLineArguments(rawArgs) {
       '--applications': Boolean,
       '--dnids': Boolean,
       '--subscribers': Boolean,
-      '--users': Boolean,
+      '--config': Boolean,
       '-T': '--tenant',
       '-D': '--domains',
       '-t': '--trunks',
       '-a': '--applications',
       '-d': '--dnids',
       '-s': '--subscribers',
-      '-u': '--users',
+      '-c': '--config'
     },
     {
       permissive: true,
@@ -29,15 +48,11 @@ function parseCommandLineArguments(rawArgs) {
     }
   );
 
-  if (Object.keys(datamodelArgs).length != 2)
-    help.help_general('Error: Missing datamodel argument');
-
-  result.datamodel = Object.keys(datamodelArgs)[1];
-
-  const commandHelp = arg(
+  /* Did the user request a misc command? */
+  const commandMisc = arg(
     {
       '--help': Boolean,
-      '-h': '--help'
+      '-h': '--help',
     },
     {
       permissive: true,
@@ -45,8 +60,12 @@ function parseCommandLineArguments(rawArgs) {
     }
   );
 
-  if (Object.keys(commandHelp).length == 2) {
-    switch (result.datamodel) {
+  if (Object.keys(commandMisc).length == 2) {
+
+    if (Object.keys(datamodelArgs).length != 2)
+      help.help_general('Error: No datamodel argument (or too many) provided');
+
+    switch (Object.keys(datamodelArgs)[1]) {
       case '--tenant':
         help.help_tenant();
         break;
@@ -65,34 +84,51 @@ function parseCommandLineArguments(rawArgs) {
       case '--trunks':
         help.help_trunks();
         break;
-      case '--users':
-        help.help_users();
+      case '--config':
+        help.help_config();
         break;
     }
   }
 
-  const commandArgs = arg(
-    {
-      '--list': Boolean,
-      '--create': Boolean,
-      '--get': Boolean,
-      '--delete': Boolean,
-      '--update': Boolean,
-    },
-    {
-      permissive: true,
-      argv: rawArgs.slice(2),
-    }
-  );
+  /* In this point, there is no misc command so we need to verify the data model */
+  if (Object.keys(datamodelArgs).length != 2)
+    help.help_general('Error: No datamodel argument (or too many) provided');
 
-  if (Object.keys(commandArgs).length != 2)
-    help.help_general('Error: Missing command argument');
-
-  result.command = Object.keys(commandArgs)[1];
-
+  result.datamodel = Object.keys(datamodelArgs)[1];
   return result;
 }
 
 export async function cli(args) {
-  let commandArguments = parseCommandLineArguments(args);
+
+  /* Configuration Loader */
+  if (!fs.existsSync(environmentFilename)) {
+    console.log('Notice: environment file missing, creating one...');
+    fs.writeFile(environmentFilename, '', {mode: 0o644}, function (writeError) {
+      if (writeError) throw writeError;
+    });
+    console.log('Notice: an empty environment file created, please use --config to configure your environment');
+    process.exit(0);
+  }
+
+  const configuration = require('dotenv').config(
+    {
+      path: environmentFilename
+    }
+  );
+
+  let cliCommand = parseCommandLineArguments(args);
+
+  switch (cliCommand.datamodel) {
+    case '--config':
+      var configObject = config.parseConfigOptions(args);
+      config.buildConfigFile(configObject, environmentFilename);
+      process.exit(0);
+      break;
+    case '--tenant':
+      console.log(await tenant.execute(args));
+      break;
+    default:
+      break;
+  }
+
 }
