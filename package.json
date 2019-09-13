@@ -1,32 +1,64 @@
 {
   "name": "@nir.simionovich/cloudonix-cli",
-  "version": "0.1.0",
   "description": "A CLI tool for the Cloudonix API.Core",
-  "main": "src/index.js",
+  "version": "0.1.0",
+  "author": "Nir Simionovich",
   "bin": {
     "@nir.simionovich/cloudonix-cli": "bin/cloudonix-cli",
-    "cloudonix-cli": "bin/cloudonix-cli"
+    "cloudonix-cli": "./bin/run"
   },
-  "publishConfig": {
-    "access": "public"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "cli",
-    "cloudonix"
-  ],
-  "author": "Nir Simionovich",
-  "license": "MIT",
+  "bugs": "https://github.com/cloudonix/cloudonix-cli/issues",
   "dependencies": {
+    "@oclif/command": "^1.5.19",
+    "@oclif/config": "^1.13.3",
+    "@oclif/plugin-help": "^2.2.1",
     "arg": "^4.1.1",
     "axios": "^0.19.0",
     "chalk": "^2.4.2",
+    "cli-ux": "^5.3.2",
+    "commander": "^3.0.1",
+    "console.json": "^0.2.1",
     "dotenv": "^8.1.0",
     "esm": "^3.2.25",
     "inquirer": "^7.0.0",
     "ncp": "^2.0.0",
     "prettyjson": "^1.2.1"
+  },
+  "devDependencies": {
+    "@oclif/dev-cli": "^1.22.2",
+    "globby": "^10.0.1"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "files": [
+    "/bin",
+    "/npm-shrinkwrap.json",
+    "/oclif.manifest.json",
+    "/src"
+  ],
+  "homepage": "https://github.com/cloudonix/cloudonix-cli",
+  "keywords": [
+    "cli",
+    "cloudonix"
+  ],
+  "license": "MIT",
+  "main": "src/index.js",
+  "oclif": {
+    "commands": "./src/commands",
+    "bin": "cloudonix-cli",
+    "plugins": [
+      "@oclif/plugin-help"
+    ]
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": "cloudonix/cloudonix-cli",
+  "scripts": {
+    "postpack": "rm -f oclif.manifest.json",
+    "prepack": "oclif-dev manifest && oclif-dev readme",
+    "test": "echo NO TESTS",
+    "version": "oclif-dev readme && git add README.md"
   }
 }
