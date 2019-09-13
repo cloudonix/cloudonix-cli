@@ -1,11 +1,13 @@
 *-debug.log
 *-error.log
+.env.cloudonix.cli
+.editorconfig
+.eslintrc
+.travis.yml
 /.nyc_output
 /dist
 /tmp
 /yarn.lock
+/old
 node_modules
-.editorconfig
-.eslintrc
-.travis.yml
 package-lock.json

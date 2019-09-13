@@ -10,8 +10,6 @@
  * Creator: Nir Simionovich <nirs@cloudonix.io> | 2019-08-27
  */
 
-const ModelQueryPath = '/tenants';
-const Client = require('../helpers/Client');
 const TenantApi = require('../lib/TenantApi');
 
 class TenantDatamodel {
@@ -39,7 +37,7 @@ class TenantDatamodel {
     return result;
   }
 
-  static async get(flags) {
+  static async get() {
     try {
       var response = await TenantApi.get();
       return {

@@ -10,12 +10,11 @@
  * Creator: Nir Simionovich <nirs@cloudonix.io> | 2019-08-27
  */
 
-const {Command, flags} = require('@oclif/command');
-const ConfigHelper = require('../helpers/Configuration');
-const Client = require('../helpers/Client');
-const TenantModel = require('../datamodels/TenantModel');
-
 require('console.json');
+
+const ConfigHelper = require('../helpers/Configuration');
+const TenantModel = require('../datamodels/TenantModel');
+const {Command, flags} = require('@oclif/command');
 
 class TenantCommand extends Command {
 
