@@ -25,8 +25,7 @@ class ConfigCommand extends Command {
     const {args} = this.parse(ConfigCommand);
 
     if ((!Configuration) && (args.command!="set")) {
-      console.log('CLI Configuration file missing or mis-configured, please use `cloudonix-cli config --help` to setup your CLI tool');
-      process.exit(-1);
+      this.error('CLI Configuration missing or mis-configured, use `cloudonix-cli config --help` to setup your CLI tool');
     }
 
     switch (args.command) {
@@ -36,8 +35,7 @@ class ConfigCommand extends Command {
           sandbox: flags.sandbox
         };
         if (!ConfigHelper.setConfiguration(configObject)) {
-          console.log('CLI Configuration setup failed');
-          process.exit(-1);
+          this.error('CLI Configuration setup failed');
         }
         Configuration = ConfigHelper.validateConfiguration();
         ConfigHelper.outputConfiguration(Configuration);

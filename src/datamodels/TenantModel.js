@@ -75,7 +75,7 @@ class TenantDatamodel {
       var attirbuteKeyValue = (typeof flags.value != "undefined") ? flags.value : false;
 
       if ((!attributeKeyName) || (!attirbuteKeyValue)) {
-        return('Error: Both --setpair= and --value= must be provided');
+        return({ status: 500, message: 'Both --setpair= and --value= must be provided' });
       }
 
       var response = await TenantApi.settingsAttributeSet(attributeKeyName, attirbuteKeyValue);
@@ -132,7 +132,7 @@ class TenantDatamodel {
     try {
       var apikeyName = (typeof flags.generate != "undefined") ? flags.generate : false;
       if (!apikeyName) {
-        return('Error: --generate= must include a string value');
+        return({ status: 500, message: '--generate= must include a string value' });
       }
 
       var response = await TenantApi.apikeyGenerate(apikeyName);
@@ -154,7 +154,7 @@ class TenantDatamodel {
     try {
       var apikeyId = (typeof flags.revoke != "undefined") ? flags.revoke : false;
       if (!apikeyId) {
-        return('Error: --revoke= must include an integer value');
+        return({ status: 500, message: '--revoke= must include an integer value' });
       }
 
       var response = await TenantApi.apikeyRevoke(apikeyId);
