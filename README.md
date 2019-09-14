@@ -28,27 +28,26 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`cloudonix-cli config COMMAND`](#cloudonix-cli-config-command)
+* [`cloudonix-cli hello`](#cloudonix-cli-hello)
 * [`cloudonix-cli help [COMMAND]`](#cloudonix-cli-help-command)
-* [`cloudonix-cli $ cloudonix-cli tenant COMMAND [OPTION] [OPTION] [OPTION]`](#cloudonix-cli--cloudonix-cli-tenant-command-option-option-option)
 
-## `cloudonix-cli config COMMAND`
+## `cloudonix-cli hello`
 
-Configure the Cloudonix CLI
+Describe the command here
 
 ```
 USAGE
-  $ cloudonix-cli config COMMAND
-
-ARGUMENTS
-  COMMAND  (get|set) [default: get] Command to execute
+  $ cloudonix-cli hello
 
 OPTIONS
-  --apikey=apikey  Cloudonix API key
-  --sandbox        Enable/Disable sandbox operations
+  -n, --name=name  name to print
+
+DESCRIPTION
+  ...
+  Extra documentation goes here
 ```
 
-_See code: [src/commands/config.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.0/src/commands/config.js)_
+_See code: [src/commands/hello.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.0/src/commands/hello.js)_
 
 ## `cloudonix-cli help [COMMAND]`
 
@@ -66,47 +65,4 @@ OPTIONS
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.2.1/src/commands/help.ts)_
-
-## `cloudonix-cli $ cloudonix-cli tenant COMMAND [OPTION] [OPTION] [OPTION]`
-
-Manage Cloudonix tenant data model
-
-```
-USAGE
-  $ cloudonix-cli $ cloudonix-cli tenant COMMAND [OPTION] [OPTION] [OPTION]
-
-ARGUMENTS
-  COMMAND  (get|settings|apikey) [default: get] Command to execute
-
-OPTIONS
-  --delpair=delpair    Delete a tenant settings key:value pair, as designated by `delkey`
-  --generate=generate  Generate a new API key, and set its name
-  --id=id              Tenant ID
-  --keyid=keyid        Get API key information
-  --keylist            [default] Get API key list
-  --name=name          Tenant name
-  --revoke=revoke      Revoke an API key, indicated by its name
-  --self               [default] Refer to the tenant indicated by the configured API key
-  --setpair=setpair    Set a tenant settings key:value pair, as designated by `addpair` and `value`
-  --value=value        Assign the `value` to the new settings pair, designated by `addpair`
-
-DESCRIPTION
-  A tenant represents the highest level of authorization a Cloudonix platform customer can 
-  have. Tenants maintain multiple sets of domains, applications, trunks, DNIDs and more.
-
-  The 'tenant' module enables the tenant administrator to query the tenant configuration
-  and control various teant related settings.
-
-EXAMPLES
-  Get my tenant information
-  $ cloudonix-cli tenant get --self
-
-  List all tenant associated API keys (all types)
-  $ cloudonix-cli tenant apikey --getkey --self
-
-  Add a tenant setting to your tenant
-  $ cloudonix-cli tenant settings --addpair=new-key --value=new-value --self
-```
-
-_See code: [src/commands/tenant.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.0/src/commands/tenant.js)_
 <!-- commandsstop -->
