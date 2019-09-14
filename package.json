@@ -49,7 +49,10 @@
     "bin": "cloudonix-cli",
     "plugins": [
       "@oclif/plugin-help"
-    ]
+    ],
+    "hooks": {
+      "init": "./src/hooks/init/verify_config"
+    }
   },
   "publishConfig": {
     "access": "public"

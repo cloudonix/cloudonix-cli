@@ -11,18 +11,12 @@
  */
 
 const prettyjson = require('prettyjson');
-const ConfigHelper = require('../helpers/Configuration');
 const TenantModel = require('../datamodels/TenantModel');
 const {Command, flags} = require('@oclif/command');
 
 class TenantCommand extends Command {
 
   async run() {
-
-    var Configuration = ConfigHelper.validateConfiguration();
-    if (!Configuration) {
-      this.error('CLI Configuration missing or mis-configured, use `cloudonix-cli config --help` to setup your CLI tool');
-    }
 
     const {flags} = this.parse(TenantCommand);
     const {args} = this.parse(TenantCommand);
@@ -88,7 +82,7 @@ The 'tenant' module enables the tenant administrator to query the tenant configu
 and control various teant related settings.
 `;
 
-TenantCommand.usage = "$ cloudonix-cli tenant COMMAND [OPTION] [OPTION] [OPTION]";
+TenantCommand.usage = "tenant COMMAND [OPTIONS]";
 
 TenantCommand.flags = {
   name: flags.string({description: 'Tenant name', exclusive: ['id', 'self']}),

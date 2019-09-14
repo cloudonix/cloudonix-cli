@@ -24,10 +24,6 @@ class ConfigCommand extends Command {
     const {flags} = this.parse(ConfigCommand);
     const {args} = this.parse(ConfigCommand);
 
-    if ((!Configuration) && (args.command!="set")) {
-      this.error('CLI Configuration missing or mis-configured, use `cloudonix-cli config --help` to setup your CLI tool');
-    }
-
     switch (args.command) {
       case "set":
         var configObject = {
