@@ -6,7 +6,7 @@
  * ╚██████╗███████╗╚██████╔╝╚██████╔╝██████╔╝╚██████╔╝██║ ╚████║██║██╔╝ ██╗
  *  ╚═════╝╚══════╝ ╚═════╝  ╚═════╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
  *
- * Project: cloudonix-cli | datamodels/tenant.js
+ * Project: cloudonix-cli | datamodels/TenantModel.js
  * Creator: Nir Simionovich <nirs@cloudonix.io> | 2019-08-27
  */
 

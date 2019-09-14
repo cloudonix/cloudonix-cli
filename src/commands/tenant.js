@@ -13,7 +13,7 @@
 require('console.json');
 
 const ConfigHelper = require('../helpers/Configuration');
-const TenantModel = require('../datamodels/TenantModel');
+const CloudonixModel = require('../datamodels/TenantModel');
 const {Command, flags} = require('@oclif/command');
 
 class TenantCommand extends Command {
@@ -32,46 +32,46 @@ class TenantCommand extends Command {
 
     /* Validate that we have some form of tenant identifier */
     /*
-    if (!TenantModel.setTenantIdent(flags)) {
+    if (!CloudonixModel.setTenantIdent(flags)) {
       console.log('Error: --id=|--name=|--self must be provided when using tenant command');
       process.exit(-1);
     }
     */
-    TenantModel.setTenantIdent(flags);
+    CloudonixModel.setTenantIdent(flags);
 
     /* Build the HTTP connector to Cloudonix API endpoint */
-    TenantModel.connect();
+    CloudonixModel.connect();
 
     /* Run the command */
-    switch (args.command) {
+    switch (args.action) {
       case "get":
-        result = await TenantModel.get();
+        result = await CloudonixModel.get();
         break;
       case "settings":
-        if (typeof flags.addpair != 'undefined') {
+        if (typeof flags.setpair != 'undefined') {
           /* Add a new profile key:value pair */
-          result = await TenantModel.settingsAttributeSet(flags);
+          result = await CloudonixModel.settingsAttributeSet(flags);
         }
         else if (typeof flags.delpair != 'undefined') {
           /* Del a profile key:value pair */
-          result = await TenantModel.settingsAttributeDelete(flags);
+          result = await CloudonixModel.settingsAttributeDelete(flags);
         }
         else {
           /* Get tenant profile */
-          result = await TenantModel.settingsGet();
+          result = await CloudonixModel.settingsGet();
         }
         break;
       case "apikey":
         if (typeof flags.generate != 'undefined') {
           /* Generate a new Tenant API key */
-          result = await TenantModel.apikeyGenerate(flags);
+          result = await CloudonixModel.apikeyGenerate(flags);
         }
         else if (typeof flags.revoke != 'undefined') {
           /* Revoke an existing Tenant API key */
-          result = await TenantModel.apikeyRevoke(flags);
+          result = await CloudonixModel.apikeyRevoke(flags);
         } else {
           /* Get tenant API keys */
-          result = await TenantModel.apikeyGet(flags);
+          result = await CloudonixModel.apikeyGet(flags);
         }
         break;
     }
@@ -89,7 +89,7 @@ The 'tenant' module enables the tenant administrator to query the tenant configu
 and control various teant related settings.
 `;
 
-TenantCommand.usage = "$ cloudonix-cli tenant COMMAND [OPTION] [OPTION] [OPTION]";
+TenantCommand.usage = "\x1b[31mtenant\x1b[0m \x1b[33m<ACTION>\x1b[0m [OPTIONS]";
 
 TenantCommand.flags = {
   name: flags.string({description: 'Tenant name', exclusive: ['id', 'self']}),
@@ -99,16 +99,20 @@ TenantCommand.flags = {
   revoke: flags.string({description: 'Revoke an API key, indicated by its name'}),
   keyid: flags.string({description: 'Get API key information',  exclusive: ['keylist']}),
   keylist: flags.boolean({description: '[default] Get API key list', exclusive: ['keyid']}),
-  setpair: flags.string({description: 'Set a tenant settings key:value pair, as designated by `addpair` and `value`'}),
+  setpair: flags.string({description: 'Set a tenant settings key:value pair, as designated by `setpair` and `value`'}),
   delpair: flags.string({description: 'Delete a tenant settings key:value pair, as designated by `delkey`'}),
-  value: flags.string({description: 'Assign the `value` to the new settings pair, designated by `addpair`',dependsOn: ['addpair']}),
+  value: flags.string({description: 'Assign the `value` to the new settings pair, designated by `setpair`',dependsOn: ['setpair']}),
 };
 
 TenantCommand.args = [
   {
-    name: 'command',
+    name: 'action',
     required: true,                     // make the arg required with `required: true`
-    description: 'Command to execute',  // help description
+    description: `Command to execute
+
+\x1b[33mget\x1b[0m       Get tenant information
+\x1b[33msettings\x1b[0m  Update tenant settings
+\x1b[33mapikey\x1b[0m    Manage tenant API keys`,  // help description
     default: 'get',                     // default value if no arg input
     options: ['get', 'settings', 'apikey'],        // only allow input to be from a discrete set
   }
