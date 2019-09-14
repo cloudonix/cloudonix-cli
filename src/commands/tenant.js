@@ -23,8 +23,6 @@ class TenantCommand extends Command {
     var result = {};
 
     TenantModel.setTenantIdent(flags);
-
-    /* Build the HTTP connector to Cloudonix API endpoint */
     TenantModel.connect();
 
     /* Run the command */

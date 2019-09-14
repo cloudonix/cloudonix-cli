@@ -9,21 +9,10 @@
  * Project: cloudonix-cli | lib/TenantApi.js
  * Creator: Nir Simionovich <nirs@cloudonix.io> | 2019-08-27
  */
-const ModelQueryPath = '/tenants';
 const Client = require('../helpers/Client');
+const Api = require('./Api');
 
-class TenantApi {
-
-  static connect(apikey, endpoint) {
-    this._modelHttpConnector = Client.Connect(apikey, endpoint);
-  }
-
-  static setTenantIdent(ident) {
-
-    var result = (typeof ident != "undefined") ? ModelQueryPath + '/' + ident : ModelQueryPath + '/self';
-    this._modelQueryPath = result;
-    return result;
-  }
+class TenantApi extends Api {
 
   static async get() {
     try {
@@ -36,7 +25,8 @@ class TenantApi {
     } catch (error) {
       return {
         status: error.response.status,
-        message: error.response.statusText
+        message: error.response.statusText,
+        data: false
       };
     }
   }
@@ -52,7 +42,8 @@ class TenantApi {
     } catch (error) {
       return {
         status: error.response.status,
-        message: error.response.statusText
+        message: error.response.statusText,
+        data: false
       };
     }
   }
@@ -70,7 +61,8 @@ class TenantApi {
     } catch (error) {
       return {
         status: error.response.status,
-        message: error.response.statusText
+        message: error.response.statusText,
+        data: false
       };
     }
   }
@@ -86,7 +78,8 @@ class TenantApi {
     } catch (error) {
       return {
         status: error.response.status,
-        message: error.response.statusText
+        message: error.response.statusText,
+        data: false
       };
     }
   }
@@ -104,7 +97,8 @@ class TenantApi {
     } catch (error) {
       return {
         status: error.response.status,
-        message: error.response.statusText
+        message: error.response.statusText,
+        data: false
       };
     }
   }
@@ -122,7 +116,8 @@ class TenantApi {
     } catch (error) {
       return {
         status: error.response.status,
-        message: error.response.statusText
+        message: error.response.statusText,
+        data: false
       };
     }
   }
@@ -140,7 +135,8 @@ class TenantApi {
     } catch (error) {
       return {
         status: error.response.status,
-        message: error.response.statusText
+        message: error.response.statusText,
+        data: false
       };
     }
   }

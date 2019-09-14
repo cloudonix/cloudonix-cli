@@ -11,66 +11,34 @@
  */
 
 const TenantApi = require('../lib/TenantApi');
+const DataModel = require('./DataModel');
+const CurrentDataModel = 'tenants';
 
-class TenantDatamodel {
-
-  static connect() {
-    this._modelHttpConnector = TenantApi.connect(process.env.APIKEY, process.env.ENDPOINT);
-  }
-
-  static setTenantIdent(flags) {
-    var result = false;
-
-    if (!result) {
-      result = (typeof flags.id != "undefined") ? flags.id : false;
-      TenantApi.setTenantIdent(result);
-    }
-    if (!result) {
-      result = (typeof flags.name != "undefined") ? flags.name : false;
-      TenantApi.setTenantIdent(result);
-    }
-    if (!result) {
-      result = (typeof flags.self != "undefined") ? 'self' : false;
-      TenantApi.setTenantIdent();
-    }
-
-    return result;
-  }
+class TenantDatamodel extends DataModel {
 
   static async get() {
     try {
+      this._modelQueryPath = TenantApi.setTenant(CurrentDataModel, this._modelTenant);
       var response = await TenantApi.get();
-      return {
-        status: response.status,
-        message: response.statusText,
-        data: response.data
-      };
+      return response;
     } catch (error) {
-      return {
-        status: error.response.status,
-        message: error.response.statusText
-      };
+      return error;
     }
   }
 
   static async settingsGet() {
     try {
+      this._modelQueryPath = TenantApi.setTenant(CurrentDataModel, this._modelTenant);
       var response = await TenantApi.settingsGet();
-      return {
-        status: response.status,
-        message: response.statusText,
-        data: response.data
-      };
+      return response;
     } catch (error) {
-      return {
-        status: error.response.status,
-        message: error.response.statusText
-      };
+      return error;
     }
   }
 
   static async settingsAttributeSet(flags) {
     try {
+      this._modelQueryPath = TenantApi.setTenant(CurrentDataModel, this._modelTenant);
       var attributeKeyName = (typeof flags.setpair != "undefined") ? flags.setpair : false;
       var attirbuteKeyValue = (typeof flags.value != "undefined") ? flags.value : false;
 
@@ -79,57 +47,39 @@ class TenantDatamodel {
       }
 
       var response = await TenantApi.settingsAttributeSet(attributeKeyName, attirbuteKeyValue);
-      return {
-        status: response.status,
-        message: response.statusText,
-        data: response.data
-      };
+      return response;
     } catch (error) {
-      return {
-        status: error.response.status,
-        message: error.response.statusText
-      };
+      return error;
     }
   }
 
   static async settingsAttributeDelete(flags) {
     try {
+      this._modelQueryPath = TenantApi.setTenant(CurrentDataModel, this._modelTenant);
       var attributeKeyName = (typeof flags.delpair != "undefined") ? flags.delpair : false;
 
       var response = await TenantApi.settingsAttributeDelete(attributeKeyName);
-      return {
-        status: response.status,
-        message: response.statusText,
-        data: response.data
-      };
+      return response;
     } catch (error) {
-      return {
-        status: error.response.status,
-        message: error.response.statusText
-      };
+      return error;
     }
   }
 
   static async apikeyGet(flags) {
     try {
+      this._modelQueryPath = TenantApi.setTenant(CurrentDataModel, this._modelTenant);
       var apikeyId = (typeof flags.keyid != "undefined") ? flags.keyid : false;
       var response = await TenantApi.apikeyGet(apikeyId);
 
-      return {
-        status: response.status,
-        message: response.statusText,
-        data: response.data
-      };
+      return response;
     } catch (error) {
-      return {
-        status: error.response.status,
-        message: error.response.statusText
-      };
+      return error;
     }
   }
 
   static async apikeyGenerate(flags) {
     try {
+      this._modelQueryPath = TenantApi.setTenant(CurrentDataModel, this._modelTenant);
       var apikeyName = (typeof flags.generate != "undefined") ? flags.generate : false;
       if (!apikeyName) {
         return({ status: 500, message: '--generate= must include a string value' });
@@ -137,21 +87,15 @@ class TenantDatamodel {
 
       var response = await TenantApi.apikeyGenerate(apikeyName);
 
-      return {
-        status: response.status,
-        message: response.statusText,
-        data: response.data
-      };
+      return response;
     } catch (error) {
-      return {
-        status: error.response.status,
-        message: error.response.statusText
-      };
+      return error;
     }
   }
 
   static async apikeyRevoke(flags) {
     try {
+      this._modelQueryPath = TenantApi.setTenant(CurrentDataModel, this._modelTenant);
       var apikeyId = (typeof flags.revoke != "undefined") ? flags.revoke : false;
       if (!apikeyId) {
         return({ status: 500, message: '--revoke= must include an integer value' });
@@ -159,16 +103,9 @@ class TenantDatamodel {
 
       var response = await TenantApi.apikeyRevoke(apikeyId);
 
-      return {
-        status: response.status,
-        message: response.statusText,
-        data: response.data
-      };
+      return response;
     } catch (error) {
-      return {
-        status: error.response.status,
-        message: error.response.statusText
-      };
+      return error;
     }
   }
 }

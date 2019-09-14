@@ -7,5 +7,4 @@ module.exports = async function (opts) {
     this.error('CLI Configuration missing or mis-configured, use `cloudonix-cli config --help` to setup your CLI tool');
   }
 
-  process.stdout.write(`example hook running ${opts.id}\n`)
 }

@@ -9,22 +9,11 @@
  * Project: cloudonix-cli | lib/DomainsApi.js
  * Creator: Nir Simionovich <nirs@cloudonix.io> | 2019-08-27
  */
-const ModelQueryTenantPath = '/tenants';
-const ModelQueryPath = '/domains';
+
 const Client = require('../helpers/Client');
+const Api = require('./Api');
 
-class DomainsApi {
-
-  static connect(apikey, endpoint) {
-    this._modelHttpConnector = Client.Connect(apikey, endpoint);
-  }
-
-  static setTenantIdent(ident) {
-
-    var result = (typeof ident != "undefined") ? ModelQueryTenantPath + '/' + ident : ModelQueryTenantPath + '/self';
-    this._modelQueryPath = result + ModelQueryPath;
-    return this._modelQueryPath;
-  }
+class DomainsApi extends Api {
 
   static async get(domainName) {
     try {
@@ -38,7 +27,8 @@ class DomainsApi {
     } catch (error) {
       return {
         status: error.response.status,
-        message: error.response.statusText
+        message: error.response.statusText,
+        data: false
       };
     }
   }
@@ -54,7 +44,8 @@ class DomainsApi {
     } catch (error) {
       return {
         status: error.response.status,
-        message: error.response.statusText
+        message: error.response.statusText,
+        data: false
       };
     }
   }
@@ -70,7 +61,8 @@ class DomainsApi {
     } catch (error) {
       return {
         status: error.response.status,
-        message: error.response.statusText
+        message: error.response.statusText,
+        data: false
       };
     }
   }
@@ -88,7 +80,8 @@ class DomainsApi {
     } catch (error) {
       return {
         status: error.response.status,
-        message: error.response.statusText
+        message: error.response.statusText,
+        data: false
       };
     }
   }
@@ -130,7 +123,8 @@ class DomainsApi {
     } catch (error) {
       return {
         status: error.response.status,
-        message: error.response.statusText
+        message: error.response.statusText,
+        data: false
       };
     }
   }

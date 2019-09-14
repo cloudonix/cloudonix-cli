@@ -11,30 +11,14 @@
  */
 
 const DomainsApi = require('../lib/DomainsApi');
+const DataModel = require('./DataModel');
+const CurrentDataModel = 'domains';
 
-class DomainsDataModel {
-
-  static connect() {
-    this._modelHttpConnector = DomainsApi.connect(process.env.APIKEY, process.env.ENDPOINT);
-  }
-
-  static setTenantIdent(flags) {
-    var result = false;
-
-    if (!result) {
-      result = (typeof flags.tenant != "undefined") ? flags.tenant : false;
-      DomainsApi.setTenantIdent(result);
-    }
-    if (!result) {
-      result = (typeof flags.self != "undefined") ? 'self' : false;
-      DomainsApi.setTenantIdent();
-    }
-
-    return result;
-  }
+class DomainsDataModel extends DataModel{
 
   static async get(flags) {
     try {
+      this._modelQueryPath = DomainsApi.setTenant(CurrentDataModel, this._modelTenant);
       var domainName = false;
       if (typeof flags.name != "undefined") {
         domainName = flags.name;
@@ -45,74 +29,53 @@ class DomainsDataModel {
       var domainAliases = (typeof flags.aliases != "undefined") ? flags.aliases : false;
 
       var response = (!domainName) ? await DomainsApi.get() : await DomainsApi.get(domainName);
-      return {
-        status: response.status,
-        message: response.statusText,
-        data: response.data
-      };
+
+      return response;
     } catch (error) {
-      return {
-        status: error.response.status,
-        message: error.response.statusText
-      };
+      return error;
     }
   }
 
   static async create(flags) {
     try {
+      this._modelQueryPath = DomainsApi.setTenant(CurrentDataModel, this._modelTenant);
       var domainName = (typeof flags.name != "undefined") ? flags.name : false;
       var response = await DomainsApi.create(domainName);
-      return {
-        status: response.status,
-        message: response.statusText,
-        data: response.data
-      };
+
+      return response;
     } catch (error) {
-      return {
-        status: error.response.status,
-        message: error.response.statusText
-      };
+      return error;
     }
   }
 
   static async revoke(flags) {
     try {
+      this._modelQueryPath = DomainsApi.setTenant(CurrentDataModel, this._modelTenant);
       var domainIdent = (typeof flags.name != "undefined") ? flags.name : false;
       var response = await DomainsApi.revoke(domainIdent);
-      return {
-        status: response.status,
-        message: response.statusText,
-        data: response.data
-      };
+
+      return response;
     } catch (error) {
-      return {
-        status: error.response.status,
-        message: error.response.statusText
-      };
+      return error;
     }
   }
 
   static async update(flags) {
     try {
+      this._modelQueryPath = DomainsApi.setTenant(CurrentDataModel, this._modelTenant);
       var domainName = (typeof flags.name != "undefined") ? flags.name : false;
       var newDomainName = (typeof flags.newname != "undefined") ? flags.newname : false;
       var response = await DomainsApi.update(domainName, newDomainName);
-      return {
-        status: response.status,
-        message: response.statusText,
-        data: response.data
-      };
+
+      return response;
     } catch (error) {
-      return {
-        status: error.response.status,
-        message: error.response.statusText
-      };
+      return error;
     }
   }
 
   static async config(flags) {
     try {
-
+      this._modelQueryPath = DomainsApi.setTenant(CurrentDataModel, this._modelTenant);
       var configSet = (typeof flags.set != "undefined") ? flags.set : false;
       var configUnset = (typeof flags.unset != "undefined") ? flags.unset : false;
 
@@ -173,16 +136,9 @@ class DomainsDataModel {
         response = await DomainsApi.config(domainName, false, configObjectUnset);
       }
 
-      return {
-        status: response.status,
-        message: response.statusText,
-        data: response.data
-      };
+      return response;
     } catch (error) {
-      return {
-        status: error.response.status,
-        message: error.response.statusText
-      };
+      return error;
     }
   }
 
