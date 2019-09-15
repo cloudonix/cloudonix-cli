@@ -23,6 +23,7 @@ class DataModel {
 
     switch (datamodel) {
       case "trunks":
+      case "applications":
         if (!result) {
           result = (typeof flags.tenant != "undefined") ? flags.tenant : false;
         }
@@ -49,6 +50,18 @@ class DataModel {
     this._modelTenant = result;
     return result;
   }
+
+  static cleanResponse(response) {
+    if (typeof response.data.length != 'undefined') {
+      Object.keys(response.data).forEach(function (dataObject) {
+        delete response.data[dataObject].domain;
+      });
+    } else {
+      delete response.data.domain;
+    }
+    return response;
+  }
+
 }
 
 module.exports = DataModel;

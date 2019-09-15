@@ -10,23 +10,23 @@
  * Creator: Nir Simionovich <nirs@cloudonix.io> | 2019-08-27
  */
 
-const TrunksApi = require('../lib/TrunksApi');
+const ApplicationsApi = require('../lib/ApplicationsApi');
 const DataModel = require('./DataModel');
-const CurrentDataModel = 'trunks';
+const CurrentDataModel = 'applications';
 
-class TrunksDatamodel extends DataModel {
+class ApplicationsDatamodel extends DataModel {
 
   static async get(flags) {
     try {
-      this._modelQueryPath = TrunksApi.setTenant(CurrentDataModel, this._modelTenant, flags.domain);
+      this._modelQueryPath = ApplicationsApi.setTenant(CurrentDataModel, this._modelTenant, flags.domain);
 
       var response;
       if (typeof flags.name != 'undefined') {
-        response = await TrunksApi.get(flags.name);
+        response = await ApplicationsApi.get(flags.name);
       } else if (typeof flags.id != 'undefined') {
-        response = await TrunksApi.get(flags.id);
+        response = await ApplicationsApi.get(flags.id);
       } else {
-        response = await TrunksApi.get();
+        response = await ApplicationsApi.get();
       }
 
       return this.cleanResponse(response);
@@ -38,24 +38,22 @@ class TrunksDatamodel extends DataModel {
   static async create(flags) {
     try {
 
-      if (typeof flags.transport == 'undefined') {
-        flags.transport = 'udp';
+      if (typeof flags.name == 'undefined') {
+        return {
+          status: 500,
+          message: 'Missing arguments --name',
+        }
       }
 
-      if (typeof flags.port == 'undefined') {
-        flags.port = 5060;
+      if (typeof flags.url == 'undefined') {
+        return {
+          status: 500,
+          message: 'Missing arguments --url',
+        }
       }
 
-      if (typeof flags.direction == 'undefined') {
-        flags.direction = 'public-outbound';
-      }
-
-      if (typeof flags.prefix == 'undefined') {
-        flags.prefix = '';
-      }
-
-      this._modelQueryPath = TrunksApi.setTenant(CurrentDataModel, this._modelTenant, flags.domain);
-      var response = await TrunksApi.create(flags.name, flags);
+      this._modelQueryPath = ApplicationsApi.setTenant(CurrentDataModel, this._modelTenant, flags.domain);
+      var response = await ApplicationsApi.create(flags);
 
       return this.cleanResponse(response);
     } catch (error) {
@@ -65,13 +63,13 @@ class TrunksDatamodel extends DataModel {
 
   static async update(flags) {
     try {
-      this._modelQueryPath = TrunksApi.setTenant(CurrentDataModel, this._modelTenant, flags.domain);
+      this._modelQueryPath = ApplicationsApi.setTenant(CurrentDataModel, this._modelTenant, flags.domain);
 
-      var trunkName;
+      var applicationName;
       if (typeof flags.name != 'undefined') {
-        trunkName = flags.name;
+        applicationName = flags.name;
       } else if (typeof flags.id != 'undefined') {
-        trunkName = flags.id;
+        applicationName = flags.id;
       } else {
         return {
           status: 500,
@@ -82,7 +80,16 @@ class TrunksDatamodel extends DataModel {
       delete flags.name;
       delete flags.id;
 
-      var response = await TrunksApi.update(trunkName, flags);
+      if (typeof flags.enable != 'undefined') {
+        flags.active = true;
+        delete flags.enable;
+      }
+      if (typeof flags.disable != 'undefined') {
+        flags.active = false;
+        delete flags.disable;
+      }
+      var response = await ApplicationsApi.update(applicationName, flags);
+      
       return this.cleanResponse(response);
     } catch (error) {
       return error;
@@ -91,26 +98,28 @@ class TrunksDatamodel extends DataModel {
 
   static async revoke(flags) {
     try {
-      this._modelQueryPath = TrunksApi.setTenant(CurrentDataModel, this._modelTenant, flags.domain);
+      this._modelQueryPath = ApplicationsApi.setTenant(CurrentDataModel, this._modelTenant, flags.domain);
 
       var response;
       if (flags.name) {
-        response = await TrunksApi.revoke(flags.name);
+        response = await ApplicationsApi.revoke(flags.name);
       } else if (flags.id) {
-        response = await TrunksApi.revoke(flags.id);
+        response = await ApplicationsApi.revoke(flags.id);
       } else {
         return {
           status: 500,
           message: 'Missing arguments --name|--id',
         }
       }
+
       return this.cleanResponse(response);
     }
+
     catch (error) {
       return error;
     }
   }
+
 }
 
-module.exports = TrunksDatamodel;
-
+module.exports = ApplicationsDatamodel;
