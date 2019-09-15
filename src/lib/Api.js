@@ -14,7 +14,7 @@ const Client = require('../helpers/Client');
 
 class Api {
 
-  static setTenant(datamodel, ident) {
+  static setTenant(datamodel, ident, domain = false) {
 
     var result;
     switch (datamodel) {
@@ -22,7 +22,9 @@ class Api {
         result = '/' + datamodel + '/' + ident;
         break;
       default:
-        result = '/tenants/' + ident + '/' + datamodel ;
+        result = '/tenants/' + ident;
+        result = result.concat((domain) ? '/domains/' + domain : '');
+        result = result.concat('/' + datamodel) ;
         break;
     }
     this._modelQueryPath = result;

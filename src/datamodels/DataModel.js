@@ -18,23 +18,35 @@ class DataModel {
     return Api.connect();
   }
 
-  static setTenantIdent(flags) {
+  static setTenantIdent(flags, datamodel = 'none') {
     var result = false;
 
-    if (!result) {
-      result = (typeof flags.id != "undefined") ? flags.id : false;
+    switch (datamodel) {
+      case "trunks":
+        if (!result) {
+          result = (typeof flags.tenant != "undefined") ? flags.tenant : false;
+        }
+        if (!result) {
+          result = 'self';
+        }
+        break;
+      default:
+        if (!result) {
+          result = (typeof flags.id != "undefined") ? flags.id : false;
+        }
+        if (!result) {
+          result = (typeof flags.name != "undefined") ? flags.name : false;
+        }
+        if (!result) {
+          result = (typeof flags.tenant != "undefined") ? flags.tenant : false;
+        }
+        if (!result) {
+          result = 'self';
+        }
+        break;
     }
-    if (!result) {
-      result = (typeof flags.name != "undefined") ? flags.name : false;
-    }
-    if (!result) {
-      result = (typeof flags.tenant != "undefined") ? flags.tenant : false;
-    }
-    if (!result) {
-      result = 'self';
-    }
-    this._modelTenant = result;
 
+    this._modelTenant = result;
     return result;
   }
 }
