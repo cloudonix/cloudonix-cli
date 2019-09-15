@@ -31,7 +31,7 @@ USAGE
 * [`cloudonix-cli apikeys`](#cloudonix-cli-apikeys)
 * [`cloudonix-cli applications COMMAND [OPTIONS]`](#cloudonix-cli-applications-command-options)
 * [`cloudonix-cli config COMMAND`](#cloudonix-cli-config-command)
-* [`cloudonix-cli dnid`](#cloudonix-cli-dnid)
+* [`cloudonix-cli dnids`](#cloudonix-cli-dnids)
 * [`cloudonix-cli domains COMMAND [OPTIONS]`](#cloudonix-cli-domains-command-options)
 * [`cloudonix-cli help [COMMAND]`](#cloudonix-cli-help-command)
 * [`cloudonix-cli subscribers`](#cloudonix-cli-subscribers)
@@ -126,13 +126,13 @@ OPTIONS
 
 _See code: [src/commands/config.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.1/src/commands/config.js)_
 
-## `cloudonix-cli dnid`
+## `cloudonix-cli dnids`
 
 Describe the command here
 
 ```
 USAGE
-  $ cloudonix-cli dnid
+  $ cloudonix-cli dnids
 
 OPTIONS
   -n, --name=name  name to print
@@ -142,7 +142,7 @@ DESCRIPTION
   Extra documentation goes here
 ```
 
-_See code: [src/commands/dnid.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.1/src/commands/dnid.js)_
+_See code: [src/commands/dnids.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.1/src/commands/dnids.js)_
 
 ## `cloudonix-cli domains COMMAND [OPTIONS]`
 

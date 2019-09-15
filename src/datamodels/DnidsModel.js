@@ -6,27 +6,27 @@
  * ╚██████╗███████╗╚██████╔╝╚██████╔╝██████╔╝╚██████╔╝██║ ╚████║██║██╔╝ ██╗
  *  ╚═════╝╚══════╝ ╚═════╝  ╚═════╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
  *
- * Project: cloudonix-cli | datamodels/ApplicationModel.js
+ * Project: cloudonix-cli | datamodels/DnidsModel.js
  * Creator: Nir Simionovich <nirs@cloudonix.io> | 2019-08-27
  */
 
 const CloudonixApi = require('../lib/CloudonixApi').constructor();
 const CloudonixCoreDatamodel = require('./CoreModel');
-const CurrentDatamodel = 'applications';
+const CurrentDatamodel = 'dnids';
 
-class ApplicationsDatamodel extends CloudonixCoreDatamodel {
+class DnidsDatamodel extends CloudonixCoreDatamodel {
 
   static async get(flags) {
     try {
-      this._modelQueryPath = CloudonixApi._applications.setTenant(CurrentDatamodel, this._modelTenant, flags.domain);
+      this._modelQueryPath = CloudonixApi._dnids.setTenant(CurrentDatamodel, this._modelTenant, flags.domain);
 
       var response;
       if (typeof flags.name != 'undefined') {
-        response = await CloudonixApi._applications.get(flags.name);
+        response = await CloudonixApi._dnids.get(flags.name);
       } else if (typeof flags.id != 'undefined') {
-        response = await CloudonixApi._applications.get(flags.id);
+        response = await CloudonixApi._dnids.get(flags.id);
       } else {
-        response = await CloudonixApi._applications.get();
+        response = await CloudonixApi._dnids.get();
       }
 
       return this.cleanResponse(response);
@@ -52,8 +52,8 @@ class ApplicationsDatamodel extends CloudonixCoreDatamodel {
         }
       }
 
-      this._modelQueryPath = CloudonixApi._applications.setTenant(CurrentDatamodel, this._modelTenant, flags.domain);
-      var response = await CloudonixApi._applications.create(flags);
+      this._modelQueryPath = CloudonixApi._dnids.setTenant(CurrentDatamodel, this._modelTenant, flags.domain);
+      var response = await CloudonixApi._dnids.create(flags);
 
       return this.cleanResponse(response);
     } catch (error) {
@@ -63,7 +63,7 @@ class ApplicationsDatamodel extends CloudonixCoreDatamodel {
 
   static async update(flags) {
     try {
-      this._modelQueryPath = CloudonixApi._applications.setTenant(CurrentDatamodel, this._modelTenant, flags.domain);
+      this._modelQueryPath = CloudonixApi._dnids.setTenant(CurrentDatamodel, this._modelTenant, flags.domain);
 
       var applicationName;
       if (typeof flags.name != 'undefined') {
@@ -88,7 +88,7 @@ class ApplicationsDatamodel extends CloudonixCoreDatamodel {
         flags.active = false;
         delete flags.disable;
       }
-      var response = await CloudonixApi._applications.update(applicationName, flags);
+      var response = await CloudonixApi._dnids.update(applicationName, flags);
 
       return this.cleanResponse(response);
     } catch (error) {
@@ -98,13 +98,13 @@ class ApplicationsDatamodel extends CloudonixCoreDatamodel {
 
   static async revoke(flags) {
     try {
-      this._modelQueryPath = CloudonixApi._applications.setTenant(CurrentDatamodel, this._modelTenant, flags.domain);
+      this._modelQueryPath = CloudonixApi._dnids.setTenant(CurrentDatamodel, this._modelTenant, flags.domain);
 
       var response;
       if (flags.name) {
-        response = await CloudonixApi._applications.revoke(flags.name);
+        response = await CloudonixApi._dnids.revoke(flags.name);
       } else if (flags.id) {
-        response = await CloudonixApi._applications.revoke(flags.id);
+        response = await CloudonixApi._dnids.revoke(flags.id);
       } else {
         return {
           status: 500,
@@ -122,4 +122,4 @@ class ApplicationsDatamodel extends CloudonixCoreDatamodel {
 
 }
 
-module.exports = ApplicationsDatamodel;
+module.exports = DnidsDatamodel;

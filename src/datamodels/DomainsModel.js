@@ -10,15 +10,15 @@
  * Creator: Nir Simionovich <nirs@cloudonix.io> | 2019-08-27
  */
 
-const DomainsApi = require('../lib/DomainsApi');
-const DataModel = require('./DataModel');
-const CurrentDataModel = 'domains';
+const CloudonixApi = require('../lib/CloudonixApi').constructor();
+const CloudonixCoreDatamodel = require('./CoreModel');
+const CurrentDatamodel = 'domains';
 
-class DomainsDataModel extends DataModel{
+class DomainsDataModel extends CloudonixCoreDatamodel {
 
   static async get(flags) {
     try {
-      this._modelQueryPath = DomainsApi.setTenant(CurrentDataModel, this._modelTenant);
+      this._modelQueryPath = CloudonixApi._domains.setTenant(CurrentDatamodel, this._modelTenant);
       var domainName = false;
       if (typeof flags.name != "undefined") {
         domainName = flags.name;
@@ -28,7 +28,7 @@ class DomainsDataModel extends DataModel{
       var domainAlias = (typeof flags.alias != "undefined") ? flags.alias : false;
       var domainAliases = (typeof flags.aliases != "undefined") ? flags.aliases : false;
 
-      var response = (!domainName) ? await DomainsApi.get() : await DomainsApi.get(domainName);
+      var response = (!domainName) ? await CloudonixApi._domains.get() : await CloudonixApi._domains.get(domainName);
 
       return response;
     } catch (error) {
@@ -38,9 +38,9 @@ class DomainsDataModel extends DataModel{
 
   static async create(flags) {
     try {
-      this._modelQueryPath = DomainsApi.setTenant(CurrentDataModel, this._modelTenant);
+      this._modelQueryPath = CloudonixApi._domains.setTenant(CurrentDatamodel, this._modelTenant);
       var domainName = (typeof flags.name != "undefined") ? flags.name : false;
-      var response = await DomainsApi.create(domainName);
+      var response = await CloudonixApi._domains.create(domainName);
 
       return response;
     } catch (error) {
@@ -50,9 +50,9 @@ class DomainsDataModel extends DataModel{
 
   static async revoke(flags) {
     try {
-      this._modelQueryPath = DomainsApi.setTenant(CurrentDataModel, this._modelTenant);
+      this._modelQueryPath = CloudonixApi._domains.setTenant(CurrentDatamodel, this._modelTenant);
       var domainIdent = (typeof flags.name != "undefined") ? flags.name : false;
-      var response = await DomainsApi.revoke(domainIdent);
+      var response = await CloudonixApi._domains.revoke(domainIdent);
 
       return response;
     } catch (error) {
@@ -62,10 +62,10 @@ class DomainsDataModel extends DataModel{
 
   static async update(flags) {
     try {
-      this._modelQueryPath = DomainsApi.setTenant(CurrentDataModel, this._modelTenant);
+      this._modelQueryPath = CloudonixApi._domains.setTenant(CurrentDatamodel, this._modelTenant);
       var domainName = (typeof flags.name != "undefined") ? flags.name : false;
       var newDomainName = (typeof flags.newname != "undefined") ? flags.newname : false;
-      var response = await DomainsApi.update(domainName, newDomainName);
+      var response = await CloudonixApi._domains.update(domainName, newDomainName);
 
       return response;
     } catch (error) {
@@ -75,7 +75,7 @@ class DomainsDataModel extends DataModel{
 
   static async config(flags) {
     try {
-      this._modelQueryPath = DomainsApi.setTenant(CurrentDataModel, this._modelTenant);
+      this._modelQueryPath = CloudonixApi._domains.setTenant(CurrentDatamodel, this._modelTenant);
       var configSet = (typeof flags.set != "undefined") ? flags.set : false;
       var configUnset = (typeof flags.unset != "undefined") ? flags.unset : false;
 
@@ -131,9 +131,9 @@ class DomainsDataModel extends DataModel{
 
       var response = {};
       if (configSet) {
-        response = await DomainsApi.config(domainName, true, configObjectSet);
+        response = await CloudonixApi._domains.config(domainName, true, configObjectSet);
       } else {
-        response = await DomainsApi.config(domainName, false, configObjectUnset);
+        response = await CloudonixApi._domains.config(domainName, false, configObjectUnset);
       }
 
       return response;

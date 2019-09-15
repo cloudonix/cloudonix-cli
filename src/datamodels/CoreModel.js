@@ -12,7 +12,7 @@
 
 const Api = require('../lib/Api');
 
-class DataModel {
+class CloudonixCoreDatamodel {
 
   static connect() {
     return Api.connect();
@@ -64,5 +64,5 @@ class DataModel {
 
 }
 
-module.exports = DataModel;
+module.exports = CloudonixCoreDatamodel;
 

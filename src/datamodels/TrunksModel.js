@@ -10,23 +10,23 @@
  * Creator: Nir Simionovich <nirs@cloudonix.io> | 2019-08-27
  */
 
-const TrunksApi = require('../lib/TrunksApi');
-const DataModel = require('./DataModel');
-const CurrentDataModel = 'trunks';
+const CloudonixApi = require('../lib/CloudonixApi').constructor();
+const CloudonixCoreDatamodel = require('./CoreModel');
+const CurrentDatamodel = 'trunks';
 
-class TrunksDatamodel extends DataModel {
+class TrunksDatamodel extends CloudonixCoreDatamodel {
 
   static async get(flags) {
     try {
-      this._modelQueryPath = TrunksApi.setTenant(CurrentDataModel, this._modelTenant, flags.domain);
+      this._modelQueryPath = CloudonixApi._trunks.setTenant(CurrentDatamodel, this._modelTenant, flags.domain);
 
       var response;
       if (typeof flags.name != 'undefined') {
-        response = await TrunksApi.get(flags.name);
+        response = await CloudonixApi._trunks.get(flags.name);
       } else if (typeof flags.id != 'undefined') {
-        response = await TrunksApi.get(flags.id);
+        response = await CloudonixApi._trunks.get(flags.id);
       } else {
-        response = await TrunksApi.get();
+        response = await CloudonixApi._trunks.get();
       }
 
       return this.cleanResponse(response);
@@ -54,8 +54,8 @@ class TrunksDatamodel extends DataModel {
         flags.prefix = '';
       }
 
-      this._modelQueryPath = TrunksApi.setTenant(CurrentDataModel, this._modelTenant, flags.domain);
-      var response = await TrunksApi.create(flags.name, flags);
+      this._modelQueryPath = CloudonixApi._trunks.setTenant(CurrentDatamodel, this._modelTenant, flags.domain);
+      var response = await CloudonixApi._trunks.create(flags.name, flags);
 
       return this.cleanResponse(response);
     } catch (error) {
@@ -65,7 +65,7 @@ class TrunksDatamodel extends DataModel {
 
   static async update(flags) {
     try {
-      this._modelQueryPath = TrunksApi.setTenant(CurrentDataModel, this._modelTenant, flags.domain);
+      this._modelQueryPath = CloudonixApi._trunks.setTenant(CurrentDatamodel, this._modelTenant, flags.domain);
 
       var trunkName;
       if (typeof flags.name != 'undefined') {
@@ -82,7 +82,7 @@ class TrunksDatamodel extends DataModel {
       delete flags.name;
       delete flags.id;
 
-      var response = await TrunksApi.update(trunkName, flags);
+      var response = await CloudonixApi._trunks.update(trunkName, flags);
       return this.cleanResponse(response);
     } catch (error) {
       return error;
@@ -91,13 +91,13 @@ class TrunksDatamodel extends DataModel {
 
   static async revoke(flags) {
     try {
-      this._modelQueryPath = TrunksApi.setTenant(CurrentDataModel, this._modelTenant, flags.domain);
+      this._modelQueryPath = CloudonixApi._trunks.setTenant(CurrentDatamodel, this._modelTenant, flags.domain);
 
       var response;
       if (flags.name) {
-        response = await TrunksApi.revoke(flags.name);
+        response = await CloudonixApi._trunks.revoke(flags.name);
       } else if (flags.id) {
-        response = await TrunksApi.revoke(flags.id);
+        response = await CloudonixApi._trunks.revoke(flags.id);
       } else {
         return {
           status: 500,

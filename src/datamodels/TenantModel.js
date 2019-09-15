@@ -10,16 +10,16 @@
  * Creator: Nir Simionovich <nirs@cloudonix.io> | 2019-08-27
  */
 
-const TenantApi = require('../lib/TenantApi');
-const DataModel = require('./DataModel');
-const CurrentDataModel = 'tenants';
+const CloudonixApi = require('../lib/CloudonixApi').constructor();
+const CloudonixCoreDatamodel = require('./CoreModel');
+const CurrentDatamodel = 'tenants';
 
-class TenantDatamodel extends DataModel {
+class TenantDatamodel extends CloudonixCoreDatamodel {
 
   static async get() {
     try {
-      this._modelQueryPath = TenantApi.setTenant(CurrentDataModel, this._modelTenant);
-      var response = await TenantApi.get();
+      this._modelQueryPath = CloudonixApi._tenant.setTenant(CurrentDatamodel, this._modelTenant);
+      var response = await CloudonixApi._tenant.get();
       return response;
     } catch (error) {
       return error;
@@ -28,8 +28,8 @@ class TenantDatamodel extends DataModel {
 
   static async settingsGet() {
     try {
-      this._modelQueryPath = TenantApi.setTenant(CurrentDataModel, this._modelTenant);
-      var response = await TenantApi.settingsGet();
+      this._modelQueryPath = CloudonixApi._tenant.setTenant(CurrentDatamodel, this._modelTenant);
+      var response = await CloudonixApi._tenant.settingsGet();
       return response;
     } catch (error) {
       return error;
@@ -38,7 +38,7 @@ class TenantDatamodel extends DataModel {
 
   static async settingsAttributeSet(flags) {
     try {
-      this._modelQueryPath = TenantApi.setTenant(CurrentDataModel, this._modelTenant);
+      this._modelQueryPath = CloudonixApi._tenant.setTenant(CurrentDatamodel, this._modelTenant);
       var attributeKeyName = (typeof flags.setpair != "undefined") ? flags.setpair : false;
       var attirbuteKeyValue = (typeof flags.value != "undefined") ? flags.value : false;
 
@@ -46,7 +46,7 @@ class TenantDatamodel extends DataModel {
         return({ status: 500, message: 'Both --setpair= and --value= must be provided' });
       }
 
-      var response = await TenantApi.settingsAttributeSet(attributeKeyName, attirbuteKeyValue);
+      var response = await CloudonixApi._tenant.settingsAttributeSet(attributeKeyName, attirbuteKeyValue);
       return response;
     } catch (error) {
       return error;
@@ -55,10 +55,10 @@ class TenantDatamodel extends DataModel {
 
   static async settingsAttributeDelete(flags) {
     try {
-      this._modelQueryPath = TenantApi.setTenant(CurrentDataModel, this._modelTenant);
+      this._modelQueryPath = CloudonixApi._tenant.setTenant(CurrentDatamodel, this._modelTenant);
       var attributeKeyName = (typeof flags.delpair != "undefined") ? flags.delpair : false;
 
-      var response = await TenantApi.settingsAttributeDelete(attributeKeyName);
+      var response = await CloudonixApi._tenant.settingsAttributeDelete(attributeKeyName);
       return response;
     } catch (error) {
       return error;
@@ -67,9 +67,9 @@ class TenantDatamodel extends DataModel {
 
   static async apikeyGet(flags) {
     try {
-      this._modelQueryPath = TenantApi.setTenant(CurrentDataModel, this._modelTenant);
+      this._modelQueryPath = CloudonixApi._tenant.setTenant(CurrentDatamodel, this._modelTenant);
       var apikeyId = (typeof flags.keyid != "undefined") ? flags.keyid : false;
-      var response = await TenantApi.apikeyGet(apikeyId);
+      var response = await CloudonixApi._tenant.apikeyGet(apikeyId);
 
       return response;
     } catch (error) {
@@ -79,13 +79,13 @@ class TenantDatamodel extends DataModel {
 
   static async apikeyGenerate(flags) {
     try {
-      this._modelQueryPath = TenantApi.setTenant(CurrentDataModel, this._modelTenant);
+      this._modelQueryPath = CloudonixApi._tenant.setTenant(CurrentDatamodel, this._modelTenant);
       var apikeyName = (typeof flags.generate != "undefined") ? flags.generate : false;
       if (!apikeyName) {
         return({ status: 500, message: '--generate= must include a string value' });
       }
 
-      var response = await TenantApi.apikeyGenerate(apikeyName);
+      var response = await CloudonixApi._tenant.apikeyGenerate(apikeyName);
 
       return response;
     } catch (error) {
@@ -95,13 +95,13 @@ class TenantDatamodel extends DataModel {
 
   static async apikeyRevoke(flags) {
     try {
-      this._modelQueryPath = TenantApi.setTenant(CurrentDataModel, this._modelTenant);
+      this._modelQueryPath = CloudonixApi._tenant.setTenant(CurrentDatamodel, this._modelTenant);
       var apikeyId = (typeof flags.revoke != "undefined") ? flags.revoke : false;
       if (!apikeyId) {
         return({ status: 500, message: '--revoke= must include an integer value' });
       }
 
-      var response = await TenantApi.apikeyRevoke(apikeyId);
+      var response = await CloudonixApi._tenant.apikeyRevoke(apikeyId);
 
       return response;
     } catch (error) {
