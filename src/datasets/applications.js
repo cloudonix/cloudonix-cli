@@ -20,8 +20,7 @@ const applications = [
       description: 'Voice Application 1 from vendor 1',
       url: 'https://voice.application/script1.php',
       params: [
-        { name: 'param1', value: 'value1'},
-        { name: 'param2', value: 'value2'},
+        'param1','param2'
       ],
       type: 'cloudonix',
       profile: {},
@@ -36,8 +35,7 @@ const applications = [
       description: 'Voice Application 2 from vendor 1',
       url: 'https://voice.application/script2.php',
       params: [
-        { name: 'param1', value: 'value1'},
-        { name: 'param2', value: 'value2'},
+        'param1','param2'
       ],
       type: 'cloudonix',
       profile: {},

@@ -89,7 +89,7 @@ class ApplicationsDatamodel extends DataModel {
         delete flags.disable;
       }
       var response = await ApplicationsApi.update(applicationName, flags);
-      
+
       return this.cleanResponse(response);
     } catch (error) {
       return error;

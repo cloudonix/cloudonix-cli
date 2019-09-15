@@ -14,6 +14,7 @@ const applicationVendors = require('../datasets/applications');
 const CloudonixModel = require('../datamodels/ApplicationsModel');
 const {Command, flags} = require('@oclif/command');
 const inquirer = require('inquirer');
+const clearscreen = require('clear');
 const prettyjson = require('prettyjson');
 
 class ApplicationsCommand extends Command {
@@ -57,11 +58,158 @@ class ApplicationsCommand extends Command {
   }
 
   async wizard(flags) {
-    return {
-      status: 200,
-      message: 'Not implemented yet',
-      data: 'Not implemented yet'
+    var menu;
+    clearscreen();
+    menu = await inquirer.prompt([{
+      name: 'configType',
+      message: 'Select an application configuration wizard',
+      type: 'list',
+      choices: [{name: 'Custom application', value: 'custom'}, {
+        name: 'Application Exchange Vendor',
+        value: 'template'
+      }]
+    }]);
+
+    var result;
+    switch (menu.configType) {
+      case "custom":
+        result = await this.wizardCustom(flags);
+        break;
+      case "template":
+        result = await this.wizardTemplate(flags);
+        break;
     }
+
+    return result;
+  }
+
+  async wizardCustom(flags) {
+    var menu;
+    var prompt;
+    var customConfig;
+
+    menu = await inquirer.prompt([
+      {
+        name: 'applicationType',
+        message: 'Select application type',
+        type: 'list',
+        choices: [
+          {name: 'Cloudonix CXML', value: 'cloudonix'},
+          {name: 'Twilio Twiml', value: 'twilio'}
+        ]
+      },
+      {
+        name: 'applicationUrl',
+        message: 'Please enter your application URL',
+        type: 'input'
+      },
+      {
+        name: 'applicationName',
+        message: 'Please enter a name for your application',
+        type: 'input',
+      }]);
+
+    customConfig = {
+      name: menu.applicationName,
+      url: menu.applicationUrl,
+      type: menu.applicationType,
+      domain: flags.domain
+    };
+
+    var confirmMessage = 'We will now create your application, using the below information:\n'
+      + prettyjson.render(customConfig)
+      + '\nPlease confirm';
+
+    prompt = await inquirer.prompt([
+      {
+        name: 'confirm',
+        message: confirmMessage,
+        type: 'confirm',
+        default: false
+      },
+    ]);
+
+    var result;
+    if (prompt.confirm) {
+      result = await CloudonixModel.create(customConfig);
+    } else {
+      result = {
+        status: 200,
+        message: 'Aborted',
+        data: 'Operation aborted'
+      }
+    }
+
+    return result;
+  }
+
+  async wizardTemplate(flags) {
+    var menu;
+    var prompt;
+    var dataEntry;
+    var templateConfig;
+
+    menu = await inquirer.prompt([{
+      name: 'applicationTemplate',
+      message: 'Select application',
+      type: 'list',
+      choices: applicationVendors
+    }]);
+    templateConfig = menu.applicationTemplate;
+    templateConfig.domain = flags.domain;
+
+    var paramQuestions = [];
+    if (typeof templateConfig.params != 'undefined') {
+      if (templateConfig.params.length > 0) {
+        templateConfig.url = templateConfig.url.concat('?');
+        templateConfig.params.forEach(function(param) {
+          var paramPrompt = {
+            name: param,
+            message: 'Please enter value of ' + param,
+            type: 'input'
+          };
+          paramQuestions.push(paramPrompt);
+        }, this);
+      }
+    }
+
+    dataEntry = await inquirer.prompt(paramQuestions);
+    for (var param in dataEntry) {
+      templateConfig.url = templateConfig.url.concat(param + '=' + dataEntry[param] + '&');
+    }
+    templateConfig.url = templateConfig.url.substring(0, templateConfig.url.length - 1);
+    delete templateConfig.params;
+
+    var vendorMessage = '\n\nThis application is provided by ' + templateConfig.vendor + '\n'
+    + 'For more information, please visit ' + templateConfig.vendor_url + '\n\n';
+    delete templateConfig.vendor;
+    delete templateConfig.vendor_url;
+
+    var confirmMessage = vendorMessage + 'We will now create your application, using the below information:\n'
+      + prettyjson.render(templateConfig)
+      + '\nPlease confirm';
+
+    prompt = await inquirer.prompt([
+      {
+        name: 'confirm',
+        message: confirmMessage,
+        type: 'confirm',
+        default: false
+      },
+    ]);
+
+    var result;
+    if (prompt.confirm) {
+      result = await CloudonixModel.create(templateConfig);
+    } else {
+      result = {
+        status: 200,
+        message: 'Aborted',
+        data: 'Operation aborted'
+      }
+    }
+
+    return result;
   }
 
 }

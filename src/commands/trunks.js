@@ -59,7 +59,6 @@ class TrunksCommand extends Command {
   }
 
   async wizard(flags) {
-
     var menu;
     clearscreen();
     menu = await inquirer.prompt([{
@@ -75,17 +74,17 @@ class TrunksCommand extends Command {
     var result;
     switch (menu.configType) {
       case "custom":
-        result = await this.wizardCustomTrunk(flags);
+        result = await this.wizardCustom(flags);
         break;
       case "template":
-        result = await this.wizardTemplateTrunk(flags);
+        result = await this.wizardTemplate(flags);
         break;
     }
 
     return result;
   }
 
-  async wizardCustomTrunk(flags) {
+  async wizardCustom(flags) {
 
     var menu;
     var prompt;
@@ -175,7 +174,7 @@ class TrunksCommand extends Command {
 
   }
 
-  async wizardTemplateTrunk(flags) {
+  async wizardTemplate(flags) {
 
     var menu;
     var prompt;
