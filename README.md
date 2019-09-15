@@ -19,7 +19,7 @@ $ npm install -g @nir.simionovich/cloudonix-cli
 $ cloudonix-cli COMMAND
 running command...
 $ cloudonix-cli (-v|--version|version)
-@nir.simionovich/cloudonix-cli/0.1.0 darwin-x64 node-v11.13.0
+@nir.simionovich/cloudonix-cli/0.1.1 darwin-x64 node-v11.13.0
 $ cloudonix-cli --help [COMMAND]
 USAGE
   $ cloudonix-cli COMMAND
@@ -28,16 +28,16 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`cloudonix-cli apikeys COMMAND`](#cloudonix-cli-apikeys-commnand)
-* [`cloudonix-cli applications COMMAND`](#cloudonix-cli-applications-commnand)
+* [`cloudonix-cli apikeys`](#cloudonix-cli-apikeys)
+* [`cloudonix-cli applications COMMAND [OPTIONS]`](#cloudonix-cli-applications-command-options)
 * [`cloudonix-cli config COMMAND`](#cloudonix-cli-config-command)
-* [`cloudonix-cli dnid COMMAND`](#cloudonix-cli-dnid-commnand)
-* [`cloudonix-cli domains COMMAND`](#cloudonix-cli-domains-action)
-* [`cloudonix-cli help COMMAND`](#cloudonix-cli-help-command)
-* [`cloudonix-cli subscribers COMMAND`](#cloudonix-cli-subscribers-commnand)
-* [`cloudonix-cli tenant COMMAND`](#cloudonix-cli-tenant-commnand)
-* [`cloudonix-cli trunks COMMAND`](#cloudonix-cli-trunks-commnand)
-* [`cloudonix-cli users COMMAND`](#cloudonix-cli-users-commnand)
+* [`cloudonix-cli dnid`](#cloudonix-cli-dnid)
+* [`cloudonix-cli domains COMMAND [OPTIONS]`](#cloudonix-cli-domains-command-options)
+* [`cloudonix-cli help [COMMAND]`](#cloudonix-cli-help-command)
+* [`cloudonix-cli subscribers`](#cloudonix-cli-subscribers)
+* [`cloudonix-cli tenant COMMAND [OPTIONS]`](#cloudonix-cli-tenant-command-options)
+* [`cloudonix-cli trunks COMMAND [OPTIONS]`](#cloudonix-cli-trunks-command-options)
+* [`cloudonix-cli users`](#cloudonix-cli-users)
 
 ## `cloudonix-cli apikeys`
 
@@ -55,25 +55,58 @@ DESCRIPTION
   Extra documentation goes here
 ```
 
-_See code: [src/commands/apikeys.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.0/src/commands/apikeys.js)_
+_See code: [src/commands/apikeys.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.1/src/commands/apikeys.js)_
 
-## `cloudonix-cli applications`
+## `cloudonix-cli applications COMMAND [OPTIONS]`
 
-Describe the command here
+Manage Cloudonix applications data model
 
 ```
 USAGE
-  $ cloudonix-cli applications
+  $ cloudonix-cli applications COMMAND [OPTIONS]
+
+ARGUMENTS
+  COMMAND
+      (get|create|update|revoke|wizard) [default: get] Command to execute
+    
+      get       Get application info or list of
+      create    Create application
+      update    Update application
+      revoke    Delete application
+      wizard    Application wizard - connect with verified compatible application providers or create a custom app
 
 OPTIONS
-  -n, --name=name  name to print
+  --disable               Set the application as disabled
+  --domain=domain         (required) Domain name or domain ID associated to the application
+  --enable                Set the application as enabled
+  --id=id                 Application ID
+  --name=name             Application name
+  --self                  [Default] Refer to the tenant indicated by the configured API key
+  --tenant=tenant         Tenant name or ID
+  --type=cloudonix|twiml  [default: cloudonix] Application API language
+  --url=url               Application remote URL
 
 DESCRIPTION
-  ...
-  Extra documentation goes here
+  An application represents a logic element, implementing one of Cloudonix's Voice or SMS application APIs.
+
+  The 'applications' module enables the tenant administrator to manage the tenants applications.
+
+EXAMPLES
+  Get list of applications and their information
+  $ cloudonix-cli applications get --domain=mydomain.org
+
+  Get application information
+  $ cloudonix-cli applications get --self --domain=mydomain.org --name=my-app-name
+
+  Create an application
+  $ cloudonix-cli applications create --self --domain=mydomain.org --name=my-app-name --type=cloudonix 
+  --url=https://myurl.com/script
+
+  Revoke an application
+  $ cloudonix-cli applications revoke --self --domain=mydomain.org --name=my-app-name
 ```
 
-_See code: [src/commands/applications.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.0/src/commands/applications.js)_
+_See code: [src/commands/applications.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.1/src/commands/applications.js)_
 
 ## `cloudonix-cli config COMMAND`
 
@@ -91,7 +124,7 @@ OPTIONS
   --sandbox        Enable/Disable sandbox operations
 ```
 
-_See code: [src/commands/config.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.0/src/commands/config.js)_
+_See code: [src/commands/config.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.1/src/commands/config.js)_
 
 ## `cloudonix-cli dnid`
 
@@ -109,15 +142,15 @@ DESCRIPTION
   Extra documentation goes here
 ```
 
-_See code: [src/commands/dnid.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.0/src/commands/dnid.js)_
+_See code: [src/commands/dnid.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.1/src/commands/dnid.js)_
 
-## `cloudonix-cli [31mdomains[0m [33m<ACTION>[0m [OPTIONS]`
+## `cloudonix-cli domains COMMAND [OPTIONS]`
 
 Manage Cloudonix tenant domains data models
 
 ```
 USAGE
-  $ cloudonix-cli domains <ACTION> [OPTIONS]
+  $ cloudonix-cli domains COMMAND [OPTIONS]
 
 ARGUMENTS
   ACTION
@@ -181,7 +214,7 @@ EXAMPLES
   $ cloudonix-cli domains config --name=mydomain.cloudonix.io --unset --active
 ```
 
-_See code: [src/commands/domains.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.0/src/commands/domains.js)_
+_See code: [src/commands/domains.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.1/src/commands/domains.js)_
 
 ## `cloudonix-cli help [COMMAND]`
 
@@ -216,15 +249,15 @@ DESCRIPTION
   Extra documentation goes here
 ```
 
-_See code: [src/commands/subscribers.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.0/src/commands/subscribers.js)_
+_See code: [src/commands/subscribers.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.1/src/commands/subscribers.js)_
 
-## `cloudonix-cli $ cloudonix-cli tenant COMMAND [OPTION] [OPTION] [OPTION]`
+## `cloudonix-cli tenant COMMAND [OPTIONS]`
 
 Manage Cloudonix tenant data model
 
 ```
 USAGE
-  $ cloudonix-cli $ cloudonix-cli tenant COMMAND [OPTION] [OPTION] [OPTION]
+  $ cloudonix-cli tenant COMMAND [OPTIONS]
 
 ARGUMENTS
   COMMAND  (get|settings|apikey) [default: get] Command to execute
@@ -259,25 +292,69 @@ EXAMPLES
   $ cloudonix-cli tenant settings --addpair=new-key --value=new-value --self
 ```
 
-_See code: [src/commands/tenant.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.0/src/commands/tenant.js)_
+_See code: [src/commands/tenant.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.1/src/commands/tenant.js)_
 
-## `cloudonix-cli trunks`
+## `cloudonix-cli trunks COMMAND [OPTIONS]`
 
-Describe the command here
+Manage Cloudonix trunks data model
 
 ```
 USAGE
-  $ cloudonix-cli trunks
+  $ cloudonix-cli trunks COMMAND [OPTIONS]
+
+ARGUMENTS
+  COMMAND
+      (get|create|update|revoke|wizard) [default: get] Command to execute
+    
+      get       Get trunk of list of
+      create    Create trunk
+      update    Update trunk
+      revoke    Delete trunk
+      wizard    Trunk wizard - connect with verified compatible service providers
 
 OPTIONS
-  -n, --name=name  name to print
+  --direction=inbound|outbound|public-inbound|public-outbound  [Default: public-outbound] Trunk transport
+
+  --domain=domain                                              (required) Domain name or domain ID associated to the
+                                                               trunk
+
+  --id=id                                                      Trunk ID
+
+  --ip=ip                                                      Trunk IP address or FQDN
+
+  --name=name                                                  Trunk name
+
+  --port=port                                                  [Default: 5060] Trunk port
+
+  --prefix=prefix                                              Trunk technical prefix
+
+  --self                                                       [default] Refer to the tenant indicated by the configured
+                                                               API key
+
+  --tenant=tenant                                              Tenant name or ID
+
+  --transport=udp|tcp|tls                                      [Default: udp] Trunk transport
 
 DESCRIPTION
-  ...
-  Extra documentation goes here
+  A trunk represents a connection from the Cloudonix switching core, to a remotely located 
+  communications provider or a remotely located communications system. Trunks are IP connections
+  based upon the SIP signalling protocol. Cloudonix trunks support the following voice codecs:
+  G711u, G711a, G729, G723, GSM, Speex and Opus. 
+
+  The 'trunks' module enables the tenant administrator to manage the tenants trunks.
+
+EXAMPLES
+  Get list of trunks and their information
+  $ cloudonix-cli trunks get --domain=mydomain.org
+
+  Get trunk information
+  $ cloudonix-cli trunks get --self  --domain=mydomain.org --name=my-trunk-name
+
+  Revoke a trunk
+  $ cloudonix-cli trunks revoke --self  --domain=mydomain.org --name=my-trunk-name
 ```
 
-_See code: [src/commands/trunks.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.0/src/commands/trunks.js)_
+_See code: [src/commands/trunks.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.1/src/commands/trunks.js)_
 
 ## `cloudonix-cli users`
 
@@ -295,5 +372,5 @@ DESCRIPTION
   Extra documentation goes here
 ```
 
-_See code: [src/commands/users.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.0/src/commands/users.js)_
+_See code: [src/commands/users.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.1/src/commands/users.js)_
 <!-- commandsstop -->
