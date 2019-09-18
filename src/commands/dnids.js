@@ -26,6 +26,10 @@ class DnidsCommand extends Command {
     CloudonixModel.setTenantIdent(flags, 'dnids');
     CloudonixModel.connect();
 
+    if (typeof flags.domain === 'undefined') {
+      flags.domain = process.env.DOMAIN;
+    }
+
     /* Run the command */
     switch (args.command) {
       case "get":
@@ -227,11 +231,12 @@ DnidsCommand.flags = {
     description: '[Default] Refer to the tenant indicated by the configured API key',
     exclusive: ['tenant']
   }),
-  domain: flags.string({description: 'Domain name or domain ID associated to the application', required: true}),
+  domain: flags.string({description: '[Default: Environment Variable] Domain name or domain ID associated to the DNID' }),
+  application: flags.string({description: '[Default: call-routing] Application name or ID associated to the DNID' }),
   dnid: flags.string({description: 'The DNID to create'}),
   global: flags.boolean({
-    description: 'Set DNID as Global (Normally, designated for inbound calls from remote sources',
-    default: true
+    description: 'Set DNID as Global (No pattern matching, exact DNID defined)',
+    default: false
   }),
   regex: flags.boolean({
     description: 'The DNID string provided is a Regular Expression',

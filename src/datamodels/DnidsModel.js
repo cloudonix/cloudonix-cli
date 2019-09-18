@@ -13,20 +13,31 @@
 const CloudonixApi = require('../lib/CloudonixApi').constructor();
 const CloudonixCoreDatamodel = require('./CoreModel');
 const CurrentDatamodel = 'dnids';
+const CloudonixDefaultApplication = 'call-routing';
 
 class DnidsDatamodel extends CloudonixCoreDatamodel {
 
   static async get(flags) {
     try {
-      this._modelQueryPath = CloudonixApi._dnids.setTenant(CurrentDatamodel, this._modelTenant, flags.domain);
 
       var response;
-      if (typeof flags.name != 'undefined') {
-        response = await CloudonixApi._dnids.get(flags.name);
-      } else if (typeof flags.id != 'undefined') {
-        response = await CloudonixApi._dnids.get(flags.id);
-      } else {
+      if (typeof flags.dnid != 'undefined') {
+
+        this._modelQueryPath = CloudonixApi._dnids.setManualQuery(
+          [{ model: 'domains', value: flags.domain }],
+          'application-lookup',
+          [{ param: 'search', value: flags.dnid}]
+        );
+        console.log(this._modelQueryPath);
+
         response = await CloudonixApi._dnids.get();
+      } else {
+        if (typeof flags.application == 'undefined') {
+          flags.application = CloudonixDefaultApplication;
+        }
+
+        this._modelQueryPath = CloudonixApi._dnids.setTenant(CurrentDatamodel, this._modelTenant, flags.domain, flags.application);
+        response = await CloudonixApi._dnids.get(flags.dnid);
       }
 
       return this.cleanResponse(response);
@@ -38,21 +49,43 @@ class DnidsDatamodel extends CloudonixCoreDatamodel {
   static async create(flags) {
     try {
 
-      if (typeof flags.name == 'undefined') {
+      if (typeof flags.dnid == 'undefined') {
         return {
           status: 500,
-          message: 'Missing arguments --name',
+          message: 'Missing arguments --dnid',
         }
       }
 
-      if (typeof flags.url == 'undefined') {
-        return {
-          status: 500,
-          message: 'Missing arguments --url',
+      if (typeof flags.legacy != 'undefined') {
+        flags.source = flags.dnid;
+        flags.asteriskCompatible = true;
+        delete flags.dnid;
+        delete flags.legacy;
+      } else if (typeof flags.prefix != 'undefined') {
+        flags.source = flags.dnid;
+        flags.prefix = true;
+        delete flags.dnid;
+      } else if (typeof flags.expression != 'undefined') {
+        flags.source = flags.dnid;
+        flags.expression = true;
+        delete flags.dnid;
+      } else if (typeof flags.global != 'undefined') {
+        if (flags.dnid.match(/^[0-9a-z]+$/)) {
+          flags.dnid = "^" + flags.dnid + "$";
         }
       }
 
-      this._modelQueryPath = CloudonixApi._dnids.setTenant(CurrentDatamodel, this._modelTenant, flags.domain);
+      if (typeof flags.disable != 'undefined') {
+        flags.active = false;
+      } else if (typeof flags.enable != 'undefined') {
+        flags.active = true;
+      }
+
+      if (typeof flags.application == 'undefined') {
+        flags.application = CloudonixDefaultApplication;
+      }
+
+      this._modelQueryPath = CloudonixApi._dnids.setTenant(CurrentDatamodel, this._modelTenant, flags.domain, flags.application);
       var response = await CloudonixApi._dnids.create(flags);
 
       return this.cleanResponse(response);
@@ -63,31 +96,45 @@ class DnidsDatamodel extends CloudonixCoreDatamodel {
 
   static async update(flags) {
     try {
-      this._modelQueryPath = CloudonixApi._dnids.setTenant(CurrentDatamodel, this._modelTenant, flags.domain);
 
-      var applicationName;
-      if (typeof flags.name != 'undefined') {
-        applicationName = flags.name;
-      } else if (typeof flags.id != 'undefined') {
-        applicationName = flags.id;
-      } else {
+      if (typeof flags.dnid == 'undefined') {
         return {
           status: 500,
-          message: 'Missing arguments --name|--id',
+          message: 'Missing arguments --dnid',
         }
       }
 
-      delete flags.name;
-      delete flags.id;
-
-      if (typeof flags.enable != 'undefined') {
-        flags.active = true;
-        delete flags.enable;
+      if (typeof flags.legacy != 'undefined') {
+        flags.source = flags.dnid;
+        flags.asteriskCompatible = true;
+        delete flags.dnid;
+        delete flags.legacy;
+      } else if (typeof flags.prefix != 'undefined') {
+        flags.source = flags.dnid;
+        flags.prefix = true;
+        delete flags.dnid;
+      } else if (typeof flags.expression != 'undefined') {
+        flags.source = flags.dnid;
+        flags.expression = true;
+        delete flags.dnid;
+      } else if (typeof flags.global != 'undefined') {
+        if (flags.dnid.match(/^[0-9a-z]+$/)) {
+          flags.dnid = "^" + flags.dnid + "$";
+        }
       }
+
       if (typeof flags.disable != 'undefined') {
         flags.active = false;
-        delete flags.disable;
+      } else if (typeof flags.enable != 'undefined') {
+        flags.active = true;
       }
+
+      if (typeof flags.application == 'undefined') {
+        flags.application = CloudonixDefaultApplication;
+      }
+
+      this._modelQueryPath = CloudonixApi._dnids.setTenant(CurrentDatamodel, this._modelTenant, flags.domain, flags.application);
+
       var response = await CloudonixApi._dnids.update(applicationName, flags);
 
       return this.cleanResponse(response);
@@ -98,7 +145,7 @@ class DnidsDatamodel extends CloudonixCoreDatamodel {
 
   static async revoke(flags) {
     try {
-      this._modelQueryPath = CloudonixApi._dnids.setTenant(CurrentDatamodel, this._modelTenant, flags.domain);
+      this._modelQueryPath = CloudonixApi._dnids.setTenant(CurrentDatamodel, this._modelTenant, flags.domain, flags.application);
 
       var response;
       if (flags.name) {

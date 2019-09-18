@@ -22,8 +22,13 @@ class CloudonixCoreDatamodel {
     var result = false;
 
     switch (datamodel) {
-      case "trunks":
-      case "applications":
+      case "tenants":
+        if (!result) {
+          result = (typeof flags.id != "undefined") ? flags.id : false;
+        }
+        if (!result) {
+          result = (typeof flags.name != "undefined") ? flags.name : false;
+        }
         if (!result) {
           result = (typeof flags.tenant != "undefined") ? flags.tenant : false;
         }
@@ -32,12 +37,6 @@ class CloudonixCoreDatamodel {
         }
         break;
       default:
-        if (!result) {
-          result = (typeof flags.id != "undefined") ? flags.id : false;
-        }
-        if (!result) {
-          result = (typeof flags.name != "undefined") ? flags.name : false;
-        }
         if (!result) {
           result = (typeof flags.tenant != "undefined") ? flags.tenant : false;
         }

@@ -21,6 +21,7 @@
     "console.json": "^0.2.1",
     "dotenv": "^8.1.0",
     "esm": "^3.2.25",
+    "generate-password": "^1.4.2",
     "inquirer": "^7.0.0",
     "ncp": "^2.0.0",
     "prettyjson": "^1.2.1"

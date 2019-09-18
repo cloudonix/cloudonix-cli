@@ -26,10 +26,21 @@ class ConfigCommand extends Command {
 
     switch (args.command) {
       case "set":
+
+        if (typeof flags.domain == 'undefined') {
+          this.error('--domain missing');
+        }
+
+        if (typeof flags.apikey == 'undefined') {
+          this.error('--apikey missing');
+        }
+
         var configObject = {
           apikey: flags.apikey,
-          sandbox: flags.sandbox
+          sandbox: flags.sandbox,
+          domain: flags.domain
         };
+
         if (!ConfigHelper.setConfiguration(configObject)) {
           this.error('CLI Configuration setup failed');
         }
@@ -37,6 +48,7 @@ class ConfigCommand extends Command {
         ConfigHelper.outputConfiguration(Configuration);
         break;
       case "get":
+      default:
         ConfigHelper.outputConfiguration(Configuration);
         break;
     }
@@ -47,21 +59,20 @@ class ConfigCommand extends Command {
 ConfigCommand.description = `Configure the Cloudonix CLI`;
 
 ConfigCommand.flags = {
-  apikey: flags.string(
-    {
-      description: 'Cloudonix API key'
-    }),
-  sandbox: flags.boolean(
-    {
-      description: 'Enable/Disable sandbox operations'
-    }),
+  apikey: flags.string({description: 'Cloudonix API key'}),
+  sandbox: flags.boolean({description: 'Enable/Disable sandbox operations', default: false}),
+  domain: flags.string({description: 'Cloudonix default domain'}),
+  envdir: flags.string({description: 'Cloudonix default domain', default: process.env.HOME}),
 };
 
 ConfigCommand.args = [
   {
     name: 'command',
     required: true,            // make the arg required with `required: true`
-    description: 'Command to execute', // help description
+    description: `Command to execute
+    
+\x1b[33mget\x1b[0m       (Default) Get trunk of list of
+\x1b[33mset\x1b[0m       Set your Cloudonix CLI tool configuration (file: ~/.env.cloudonix.cli`, // help description
     default: 'get',           // default value if no arg input
     options: ['get', 'set'],        // only allow input to be from a discrete set
   }

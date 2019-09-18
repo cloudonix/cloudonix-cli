@@ -27,6 +27,10 @@ class ApplicationsCommand extends Command {
     CloudonixModel.setTenantIdent(flags, 'applications');
     CloudonixModel.connect();
 
+    if (typeof flags.domain === 'undefined') {
+      flags.domain = process.env.DOMAIN;
+    }
+
     /* Run the command */
     switch (args.command) {
       case "get":
@@ -228,7 +232,7 @@ ApplicationsCommand.flags = {
     description: '[Default] Refer to the tenant indicated by the configured API key',
     exclusive: ['tenant']
   }),
-  domain: flags.string({description: 'Domain name or domain ID associated to the application', required: true}),
+  domain: flags.string({description: '[Default: Environment Variable] Domain name or domain ID associated to the application'}),
   name: flags.string({description: 'Application name'}),
   id: flags.integer({description: 'Application ID'}),
   url: flags.string({description: 'Application remote URL'}),

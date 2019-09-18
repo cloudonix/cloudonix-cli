@@ -28,11 +28,12 @@ class TrunksCommand extends Command {
     CloudonixModel.setTenantIdent(flags, 'trunks');
     CloudonixModel.connect();
 
+    if (typeof flags.domain === 'undefined') {
+      flags.domain = process.env.DOMAIN;
+    }
+
     /* Run the command */
     switch (args.command) {
-      case "get":
-        result = await CloudonixModel.get(flags);
-        break;
       case "create":
         result = await CloudonixModel.create(flags);
         break;
@@ -44,6 +45,10 @@ class TrunksCommand extends Command {
         break;
       case "wizard":
         result = await this.wizard(flags);
+        break;
+      case "get":
+      default:
+        result = await CloudonixModel.get(flags);
         break;
     }
 
@@ -259,7 +264,7 @@ TrunksCommand.flags = {
     description: '[default] Refer to the tenant indicated by the configured API key',
     exclusive: ['tenant']
   }),
-  domain: flags.string({description: 'Domain name or domain ID associated to the trunk', required: true}),
+  domain: flags.string({description: '[Default: Environment Variable] Domain name or domain ID associated to the trunk' }),
   name: flags.string({description: 'Trunk name'}),
   id: flags.integer({description: 'Trunk ID'}),
   ip: flags.string({description: 'Trunk IP address or FQDN'}),

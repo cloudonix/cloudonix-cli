@@ -6,18 +6,18 @@
  * ╚██████╗███████╗╚██████╔╝╚██████╔╝██████╔╝╚██████╔╝██║ ╚████║██║██╔╝ ██╗
  *  ╚═════╝╚══════╝ ╚═════╝  ╚═════╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
  *
- * Project: cloudonix-cli | lib/DnidsApi.js
+ * Project: cloudonix-cli | lib/DomainsApi.js
  * Creator: Nir Simionovich <nirs@cloudonix.io> | 2019-08-27
  */
 
 const Client = require('../helpers/Client');
 const Api = require('./Api');
 
-class DnidsApi extends Api {
+class SubscribersApi extends Api {
 
-  static async get(dnid) {
+  static async get(subscriberIdent) {
     try {
-      var queryPath = (typeof dnid != 'undefined') ? this._modelQueryPath + "/" + dnid : this._modelQueryPath;
+      var queryPath = (typeof subscriberIdent != 'undefined') ? this._modelQueryPath + "/" + subscriberIdent : this._modelQueryPath;
       var response = await this._modelHttpConnector.httpConnector.get(queryPath);
       return {
         status: response.status,
@@ -33,10 +33,10 @@ class DnidsApi extends Api {
     }
   }
 
-  static async create(applicationConfig) {
+  static async create(subscriberObject) {
     try {
       var queryPath = this._modelQueryPath;
-      var response = await this._modelHttpConnector.httpConnector.post(queryPath, applicationConfig);
+      var response = await this._modelHttpConnector.httpConnector.post(queryPath, subscriberObject);
       return {
         status: response.status,
         message: response.statusText,
@@ -51,12 +51,14 @@ class DnidsApi extends Api {
     }
   }
 
-  static async update(dnid, applicationConfig) {
+  static async update(subscriberObject) {
     try {
-      var queryPath = this._modelQueryPath + '/' + dnid;
-      var trunkConfigObject = applicationConfig;
+      var queryPath = this._modelQueryPath + '/' + subscriberObject.msisdn;
 
-      var response = await this._modelHttpConnector.httpConnector.put(queryPath, trunkConfigObject);
+      delete subscriberObject.msisdn;
+      delete subscriberObject.domain;
+
+      var response = await this._modelHttpConnector.httpConnector.put(queryPath, subscriberObject);
       return {
         status: response.status,
         message: response.statusText,
@@ -71,9 +73,9 @@ class DnidsApi extends Api {
     }
   }
 
-  static async revoke(dnid) {
+  static async revoke(msisdn) {
     try {
-      var queryPath = this._modelQueryPath + "/" + dnid;
+      var queryPath = this._modelQueryPath + "/msisdn/" + msisdn;
       var response = await this._modelHttpConnector.httpConnector.delete(queryPath);
       return {
         status: response.status,
@@ -91,4 +93,4 @@ class DnidsApi extends Api {
 
 }
 
-module.exports = DnidsApi;
+module.exports = SubscribersApi;
