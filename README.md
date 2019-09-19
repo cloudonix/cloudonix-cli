@@ -28,31 +28,65 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`cloudonix-cli apikeys`](#cloudonix-cli-apikeys)
+* [`cloudonix-cli apikeys COMMAND [OPTIONS]`](#cloudonix-cli-apikeys-command-options)
 * [`cloudonix-cli applications COMMAND [OPTIONS]`](#cloudonix-cli-applications-command-options)
 * [`cloudonix-cli config COMMAND`](#cloudonix-cli-config-command)
-* [`cloudonix-cli dnids`](#cloudonix-cli-dnids)
+* [`cloudonix-cli dnids COMMAND [OPTIONS]`](#cloudonix-cli-dnids-command-options)
 * [`cloudonix-cli domains COMMAND [OPTIONS]`](#cloudonix-cli-domains-command-options)
 * [`cloudonix-cli help [COMMAND]`](#cloudonix-cli-help-command)
-* [`cloudonix-cli subscribers`](#cloudonix-cli-subscribers)
+* [`cloudonix-cli subscribers COMMAND [OPTIONS]`](#cloudonix-cli-subscribers-command-options)
 * [`cloudonix-cli tenant COMMAND [OPTIONS]`](#cloudonix-cli-tenant-command-options)
 * [`cloudonix-cli trunks COMMAND [OPTIONS]`](#cloudonix-cli-trunks-command-options)
-* [`cloudonix-cli users`](#cloudonix-cli-users)
+* [`cloudonix-cli users COMMAND [OPTIONS]`](#cloudonix-cli-users-command-options)
 
-## `cloudonix-cli apikeys`
+## `cloudonix-cli apikeys COMMAND [OPTIONS]`
 
-Describe the command here
+Manage Cloudonix API keys data model
 
 ```
 USAGE
-  $ cloudonix-cli apikeys
+  $ cloudonix-cli apikeys COMMAND [OPTIONS]
+
+ARGUMENTS
+  COMMAND  (get|create|revoke) [default: get] Command to execute
+
+           get       Get list of API keys
+           create    Create API key
+           revoke    Delete API key
 
 OPTIONS
-  -n, --name=name  name to print
+  --application=application  Application name or ID associated to the API key
+  --domain=domain            [Default: Environment Variable] Domain name or domain ID associated to the API key
+  --name=name                A string value, representing the API key
+  --self                     [default] Refer to the tenant indicated by the configured API key
+  --tenant=tenant            Tenant name or ID
 
 DESCRIPTION
-  ...
-  Extra documentation goes here
+  An API key represents a Cloudonix API access token. Cloudonix maintains 
+  various API keys, separated to multiple access levels. The following 
+  is list of API key levels you can use:
+ 
+  domain         A Domain (aka: namespace) level API key. 
+                 Controls: Domain, Trunk, Applications, 
+                 Subscribers, DNIDs
+  application    An Application level API key. Controls: 
+                 Applications control only
+
+  The 'apikeys' module enables the tenant administrator to manage the 
+  tenants API keys.
+
+EXAMPLES
+  Get list of API keys and their information
+  $ cloudonix-cli apikeys get --self \
+     --domain=mydomain.org
+
+  Generate an API key
+  $ cloudonix-cli apikeys create --self --domain=mydomain.org \
+     --name=my-key-name
+
+  Revoke an API key
+  $ cloudonix-cli apikeys revoke --self --domain=mydomain.org \
+     --name=my-key-name
 ```
 
 _See code: [src/commands/apikeys.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.1/src/commands/apikeys.js)_
@@ -77,7 +111,7 @@ ARGUMENTS
 
 OPTIONS
   --disable               Set the application as disabled
-  --domain=domain         (required) Domain name or domain ID associated to the application
+  --domain=domain         [Default: Environment Variable] Domain name or domain ID associated to the application
   --enable                Set the application as enabled
   --id=id                 Application ID
   --name=name             Application name
@@ -110,7 +144,7 @@ _See code: [src/commands/applications.js](https://github.com/cloudonix/cloudonix
 
 ## `cloudonix-cli config COMMAND`
 
-Configure the Cloudonix CLI
+Manage Cloudonix CLI tenant information
 
 ```
 USAGE
@@ -119,27 +153,55 @@ USAGE
 ARGUMENTS
   COMMAND  (get|set) [default: get] Command to execute
 
+           get       (Default) Get trunk of list of
+           set       Set your Cloudonix CLI tool configuration (file: ~/.env.cloudonix.cli
+
 OPTIONS
   --apikey=apikey  Cloudonix API key
+  --domain=domain  Cloudonix default domain
   --sandbox        Enable/Disable sandbox operations
 ```
 
 _See code: [src/commands/config.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.1/src/commands/config.js)_
 
-## `cloudonix-cli dnids`
+## `cloudonix-cli dnids COMMAND [OPTIONS]`
 
-Describe the command here
+Manage Cloudonix DNID data model
 
 ```
 USAGE
-  $ cloudonix-cli dnids
+  $ cloudonix-cli dnids COMMAND [OPTIONS]
+
+ARGUMENTS
+  COMMAND
+      (get|create|update|revoke|wizard) [default: get] Command to execute
+    
+      get       Get DNID of list of
+      create    Create DNID
+      update    Update DNID
+      revoke    Delete DNID
+      wizard    DNID wizard
 
 OPTIONS
-  -n, --name=name  name to print
+  --application=application  [Default: call-routing] Application name or ID associated to the DNID
+  --disable                  Set the DNID as disabled
+  --dnid=dnid                The DNID to create
+  --domain=domain            [Default: Environment Variable] Domain name or domain ID associated to the DNID
+  --enable                   [Default] Set the DNID as enabled
+  --expression               The DNID string provided is a Character Class Expression
+  --global                   Set DNID as Global (No pattern matching, exact DNID defined)
+  --legacy                   The DNID string provided is an Asterisk style extensions matching format
+  --prefix                   [Default] The DNID string provided is a Prefix
+  --regex                    The DNID string provided is a Regular Expression
+  --self                     [Default] Refer to the tenant indicated by the configured API key
+  --tenant=tenant            Tenant name or ID
 
 DESCRIPTION
-  ...
-  Extra documentation goes here
+  A DNID represents a phone number (or other form of number pattern) that invokes
+  a specific Cloudonix application. The invocation of assigned application is performed
+  for any inbound call or SMS that is intercepted by the Cloudonix application Core. 
+
+  The 'dnids' module enables the tenant administrator to manage the tenant DNID application routing.
 ```
 
 _See code: [src/commands/dnids.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.1/src/commands/dnids.js)_
@@ -233,20 +295,49 @@ OPTIONS
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.2.1/src/commands/help.ts)_
 
-## `cloudonix-cli subscribers`
+## `cloudonix-cli subscribers COMMAND [OPTIONS]`
 
-Describe the command here
+Manage Cloudonix subscribers data model
 
 ```
 USAGE
-  $ cloudonix-cli subscribers
+  $ cloudonix-cli subscribers COMMAND [OPTIONS]
+
+ARGUMENTS
+  COMMAND
+      (get|create|update|revoke) [default: get] Command to execute
+    
+      get       Get subscriber or list of
+      create    Create subscriber
+      update    Update subscriber
+      revoke    Delete subscriber
 
 OPTIONS
-  -n, --name=name  name to print
+  --disable            Set the subscriber as disabled
+  --domain=domain      [Default: Environment Variable] Domain name or domain ID associated to the subscriber
+  --enable             [Default] Set the subscriber as enabled
+  --msisdn=msisdn      A subscriber identified, normally a numerical string. For simplicity, use a phone nubmer.
+  --password=password  [Default: auto-generated] An assigned password for the subscriber.
+  --reset              Reset a subscribers SIP password
+  --self               [default] Refer to the tenant indicated by the configured API key
+  --tenant=tenant      Tenant name or ID
 
 DESCRIPTION
-  ...
-  Extra documentation goes here
+  A subscriber represents a single user-agent endpoint that connects to the platform.
+  The user-agent can either be a remote website (using the Cloudonix WebSDK), a remote
+  SIP phone or a mobile application (using the Cloudonix mobile SDK).
+
+  The 'subscribers' module enables the tenant administrator to manage the tenants subscribers.
+
+EXAMPLES
+  Get list of subscriber and their information
+  $ cloudonix-cli subscribers get --self --domain=mydomain.org
+
+  Get subscriber information
+  $ cloudonix-cli subscribers get --self --domain=mydomain.org --msisdn=123455777
+
+  Revoke a subscriber
+  $ cloudonix-cli subscribers revoke --self --domain=mydomain.org --msisdn=123455777
 ```
 
 _See code: [src/commands/subscribers.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.1/src/commands/subscribers.js)_
@@ -315,8 +406,8 @@ ARGUMENTS
 OPTIONS
   --direction=inbound|outbound|public-inbound|public-outbound  [Default: public-outbound] Trunk transport
 
-  --domain=domain                                              (required) Domain name or domain ID associated to the
-                                                               trunk
+  --domain=domain                                              [Default: Environment Variable] Domain name or domain ID
+                                                               associated to the trunk
 
   --id=id                                                      Trunk ID
 
@@ -356,20 +447,43 @@ EXAMPLES
 
 _See code: [src/commands/trunks.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.1/src/commands/trunks.js)_
 
-## `cloudonix-cli users`
+## `cloudonix-cli users COMMAND [OPTIONS]`
 
-Describe the command here
+Manage Cloudonix users. 
 
 ```
 USAGE
-  $ cloudonix-cli users
+  $ cloudonix-cli users COMMAND [OPTIONS]
+
+ARGUMENTS
+  COMMAND  (get|create|update|revoke|wizard) [default: get] Command to execute
+
+           get       Get user information of list of
+           create    Create user
+           revoke    Delete user
 
 OPTIONS
-  -n, --name=name  name to print
+  --domain=domain      Domain name or domain ID associated to the username, if not specified - refernce to Tenant user
+  --self               [default] Refer to the tenant indicated by the configured API key
+  --tenant=tenant      Tenant name or ID
+  --username=username  Username to create or revoke. A username MUST be a valid e-Mail address
 
 DESCRIPTION
-  ...
-  Extra documentation goes here
+  Users are identified by e-Mail addresses, that can be authenticated. using either Google, Facebook, 
+  Github or Microsoft365 authentication providers. Users may be associated with a tenant or a domain. 
+  Once a user is associated with a domain, it has access to domain related data models only.
+
+  The 'users' module enables the tenant administrator to manage the tenants trunks.
+
+EXAMPLES
+  Get list of trunks and their information
+  $ cloudonix-cli trunks get --domain=mydomain.org
+
+  Get trunk information
+  $ cloudonix-cli trunks get --self  --domain=mydomain.org --name=my-trunk-name
+
+  Revoke a trunk
+  $ cloudonix-cli trunks revoke --self  --domain=mydomain.org --name=my-trunk-name
 ```
 
 _See code: [src/commands/users.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.1/src/commands/users.js)_

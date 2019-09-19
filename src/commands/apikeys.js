@@ -58,13 +58,18 @@ class ApikeyCommand extends Command {
 }
 
 ApikeyCommand.description = `Manage Cloudonix API keys data model
-An API key represents a Cloudonix API access token. Cloudonix maintains various API keys, 
-separated to multiple access levels. The following is list of API key levels you can use:
+An API key represents a Cloudonix API access token. Cloudonix maintains 
+various API keys, separated to multiple access levels. The following 
+is list of API key levels you can use:
  
-\x1b[33mdomain\x1b[0m         A Domain (aka: namespace) level API key. Controls: Domain, Trunk, Applications, Subscribers, DNIDs
-\x1b[33mapplication\x1b[0m    An Application level API key. Controls: Applications control only
+\x1b[33mdomain\x1b[0m         A Domain (aka: namespace) level API key. 
+              Controls: Domain, Trunk, Applications, 
+              Subscribers, DNIDs
+\x1b[33mapplication\x1b[0m    An Application level API key. Controls: 
+              Applications control only
 
-The 'apikeys' module enables the tenant administrator to manage the tenants API keys.
+The 'apikeys' module enables the tenant administrator to manage the 
+tenants API keys.
 `;
 
 ApikeyCommand.usage = "apikeys COMMAND [OPTIONS]";
@@ -96,9 +101,12 @@ ApikeyCommand.args = [
 ];
 
 ApikeyCommand.examples = [
-  'Get list of API keys and their information\n$ cloudonix-cli apikeys get --self --domain=mydomain.org\n',
-  'Generate an API key\n$ cloudonix-cli apikeys create --self --domain=mydomain.org --name=my-key-name\n',
-  'Revoke an API key\n$ cloudonix-cli apikeys revoke --self --domain=mydomain.org --name=my-key-name\n',
+  `Get list of API keys and their information\n$ cloudonix-cli apikeys get --self \\
+  --domain=mydomain.org\n`,
+  `Generate an API key\n$ cloudonix-cli apikeys create --self --domain=mydomain.org \\
+  --name=my-key-name\n`,
+  `Revoke an API key\n$ cloudonix-cli apikeys revoke --self --domain=mydomain.org \\
+  --name=my-key-name\n`,
 ];
 
 module.exports = ApikeyCommand;
