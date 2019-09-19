@@ -101,7 +101,7 @@ class SubscribersDatamodel extends CloudonixCoreDatamodel {
       this._modelQueryPath = CloudonixApi._subscribers.setTenant(CurrentDatamodel, this._modelTenant, flags.domain);
 
       var response;
-      if (flags.msisdn) {
+      if (typeof flags.msisdn != 'undefined') {
         response = await CloudonixApi._subscribers.revoke(flags.msisdn);
       } else {
         return {

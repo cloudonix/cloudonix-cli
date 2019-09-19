@@ -61,8 +61,7 @@ ConfigCommand.description = `Configure the Cloudonix CLI`;
 ConfigCommand.flags = {
   apikey: flags.string({description: 'Cloudonix API key'}),
   sandbox: flags.boolean({description: 'Enable/Disable sandbox operations', default: false}),
-  domain: flags.string({description: 'Cloudonix default domain'}),
-  envdir: flags.string({description: 'Cloudonix default domain', default: process.env.HOME}),
+  domain: flags.string({description: 'Cloudonix default domain'})
 };
 
 ConfigCommand.args = [

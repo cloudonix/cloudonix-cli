@@ -16,6 +16,7 @@ const DnidsApi = require('./DnidsApi');
 const DomainsApi = require('./DomainsApi');
 const TrunksApi = require('./TrunksApi');
 const SubscribersApi = require('./SubscribersApi');
+const ApikeysApi = require('./ApikeysApi');
 
 class CloudonixApi {
 
@@ -26,6 +27,7 @@ class CloudonixApi {
     this._domains = DomainsApi;
     this._trunks = TrunksApi;
     this._subscribers = SubscribersApi;
+    this._apikeys = ApikeysApi;
     this._users = false;
     return this;
   }

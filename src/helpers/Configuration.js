@@ -23,15 +23,14 @@ class ConfigHelper {
    */
   static validateConfiguration() {
 
-    var myEnv = process.env;
     var myEnvironmentPath;
 
-    if (fs.existsSync(myEnv.HOME + '/' + environmentFilename)) {
-      myEnvironmentPath = myEnv.HOME + '/' + environmentFilename;
-    } else if (fs.existsSync(myEnv.PWD + '/' + environmentFilename)) {
-      myEnvironmentPath =  myEnv.PWD + '/' + environmentFilename;
+    if (fs.existsSync(process.env.HOME + '/' + environmentFilename)) {
+      myEnvironmentPath = process.env.HOME + '/' + environmentFilename;
+    } else if (fs.existsSync(process.env.PWD + '/' + environmentFilename)) {
+      myEnvironmentPath =  process.env.PWD + '/' + environmentFilename;
     } else if (fs.existsSync(myEnv.CXCLI)) {
-      myEnvironmentPath =  myEnv.CXCLI;
+      myEnvironmentPath =  process.env.CXCLI;
     } else {
       return false;
     }
@@ -66,7 +65,7 @@ class ConfigHelper {
     environment += (!configObject['domain']) ? 'DOMAIN=' + configObject['domain'] : 'DOMAIN=' + configObject['domain'];
     environment += "\n";
 
-    fs.writeFileSync(myEnv.HOME + '/' + environmentFilename, environment, {mode: 0o644, flag: 'w'});
+    fs.writeFileSync(process.env.HOME + '/' + environmentFilename, environment, {mode: 0o644, flag: 'w'});
     return this.validateConfiguration();
   }
 

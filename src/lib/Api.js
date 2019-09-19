@@ -17,7 +17,19 @@ class Api {
   static setTenant(datamodel, ident, domain = false, application = false) {
 
     var result;
+    result = '/tenants/' + ident;
+    result = result.concat((domain) ? '/domains/' + domain : '');
+    result = result.concat('/' + datamodel);
+
     switch (datamodel) {
+      case 'apikeys':
+        if ((typeof application != 'undefined') && (application)) {
+          result = '/tenants/' + ident;
+          result = result.concat((domain) ? '/domains/' + domain : '');
+          result = result.concat((application) ? '/applications/' + application : '');
+          result = result.concat('/' + datamodel);
+        }
+        break;
       case 'tenants':
         result = '/' + datamodel + '/' + ident;
         break;
@@ -28,9 +40,6 @@ class Api {
         result = result.concat('/' + datamodel);
         break;
       default:
-        result = '/tenants/' + ident;
-        result = result.concat((domain) ? '/domains/' + domain : '');
-        result = result.concat('/' + datamodel);
         break;
     }
     this._modelQueryPath = result;
