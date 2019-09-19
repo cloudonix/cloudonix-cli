@@ -56,7 +56,7 @@ class ConfigCommand extends Command {
   }
 }
 
-ConfigCommand.description = `Configure the Cloudonix CLI`;
+ConfigCommand.description = `Manage Cloudonix CLI tenant information`;
 
 ConfigCommand.flags = {
   apikey: flags.string({description: 'Cloudonix API key'}),

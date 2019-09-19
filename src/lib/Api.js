@@ -33,6 +33,11 @@ class Api {
       case 'tenants':
         result = '/' + datamodel + '/' + ident;
         break;
+      case 'users':
+        result = '/tenants/' + ident;
+        result = result.concat((domain) ? '/domains/' + domain : '');
+        result = result.concat('/' + datamodel);
+        break;
       case 'dnids':
         result = '/tenants/' + ident;
         result = result.concat('/domains/' + domain);
