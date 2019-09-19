@@ -60,11 +60,14 @@ class SubscribersCommand extends Command {
 }
 
 SubscribersCommand.description = `Manage Cloudonix subscribers data model
-A subscriber represents a single user-agent endpoint that connects to the platform.
-The user-agent can either be a remote website (using the Cloudonix WebSDK), a remote
-SIP phone or a mobile application (using the Cloudonix mobile SDK).
 
-The 'subscribers' module enables the tenant administrator to manage the tenants subscribers.
+A subscriber represents a single user-agent endpoint that connects to
+the platform. The user-agent can either be a remote website (using the 
+Cloudonix WebSDK), a remote SIP phone or a mobile application (using 
+the Cloudonix mobile SDK).
+
+The 'subscribers' module enables the tenant administrator to manage 
+the tenants subscribers.
 `;
 
 SubscribersCommand.usage = "subscribers COMMAND [OPTIONS]";
@@ -72,11 +75,11 @@ SubscribersCommand.usage = "subscribers COMMAND [OPTIONS]";
 SubscribersCommand.flags = {
   tenant: flags.string({description: 'Tenant name or ID', exclusive: ['self']}),
   self: flags.boolean({
-    description: '[default] Refer to the tenant indicated by the configured API key',
+    description: '[default] Refer to the tenant indicated by the\nconfigured API key',
     exclusive: ['tenant']
   }),
-  domain: flags.string({description: '[Default: Environment Variable] Domain name or domain ID associated to the subscriber'}),
-  msisdn: flags.string({description: 'A subscriber identified, normally a numerical string. For simplicity, use a phone nubmer.'}),
+  domain: flags.string({description: '[Default: Environment Variable] Domain name or\ndomain ID associated to the subscriber'}),
+  msisdn: flags.string({description: 'A subscriber identified, normally a numerical\nstring. For simplicity, use a phone nubmer.'}),
   enable: flags.boolean({
     description: '[Default] Set the subscriber as enabled',
     exclusive: ['disable']
@@ -86,7 +89,7 @@ SubscribersCommand.flags = {
     exclusive: ['enable']
   }),
   password: flags.string({
-    description: '[Default: auto-generated] An assigned password for the subscriber.'
+    description: '[Default: auto-generated] An assigned password for\nthe subscriber.'
   }),
   reset: flags.boolean({
     description: 'Reset a subscribers SIP password'
@@ -111,8 +114,8 @@ SubscribersCommand.args = [
 
 SubscribersCommand.examples = [
   'Get list of subscriber and their information\n$ cloudonix-cli subscribers get --self --domain=mydomain.org\n',
-  'Get subscriber information\n$ cloudonix-cli subscribers get --self --domain=mydomain.org --msisdn=123455777\n',
-  'Revoke a subscriber\n$ cloudonix-cli subscribers revoke --self --domain=mydomain.org --msisdn=123455777\n',
+  'Get subscriber information\n$ cloudonix-cli subscribers get --self --domain=mydomain.org \\\n--msisdn=123455777\n',
+  'Revoke a subscriber\n$ cloudonix-cli subscribers revoke --self --domain=mydomain.org \\\n--msisdn=123455777\n',
 ];
 
 module.exports = SubscribersCommand;

@@ -218,40 +218,42 @@ class DnidsCommand extends Command {
 }
 
 DnidsCommand.description = `Manage Cloudonix DNID data model
-A DNID represents a phone number (or other form of number pattern) that invokes
-a specific Cloudonix application. The invocation of assigned application is performed
-for any inbound call or SMS that is intercepted by the Cloudonix application Core. 
+A DNID represents a phone number (or other form of number pattern) 
+that invokes a specific Cloudonix application. The invocation of 
+assigned application is performed for any inbound call or SMS that 
+is intercepted by the Cloudonix application Core. 
 
-The 'dnids' module enables the tenant administrator to manage the tenant DNID application routing.
+The 'dnids' module enables the tenant administrator to manage the 
+tenant DNID application routing.
 `;
 
 DnidsCommand.flags = {
   tenant: flags.string({description: 'Tenant name or ID', exclusive: ['self']}),
   self: flags.boolean({
-    description: '[Default] Refer to the tenant indicated by the configured API key',
+    description: '[Default] Refer to the tenant indicated by\nthe configured API key',
     exclusive: ['tenant']
   }),
-  domain: flags.string({description: '[Default: Environment Variable] Domain name or domain ID associated to the DNID' }),
-  application: flags.string({description: '[Default: call-routing] Application name or ID associated to the DNID' }),
+  domain: flags.string({description: '[Default: Environment Variable] Domain name\nor domain ID associated to the DNID' }),
+  application: flags.string({description: '[Default: call-routing] Application name or\nID associated to the DNID' }),
   dnid: flags.string({description: 'The DNID to create'}),
   global: flags.boolean({
-    description: 'Set DNID as Global (No pattern matching, exact DNID defined)',
+    description: 'Set DNID as Global',
     default: false
   }),
   regex: flags.boolean({
-    description: 'The DNID string provided is a Regular Expression',
+    description: 'The DNID string provided is a Regular\nExpression',
     exclusive: ['expression', 'prefix', 'legacy']
   }),
   expression: flags.boolean({
-    description: 'The DNID string provided is a Character Class Expression',
+    description: 'The DNID string provided is a Character\nClass Expression',
     exclusive: ['regex', 'prefix', 'legacy']
   }),
   prefix: flags.boolean({
-    description: '[Default] The DNID string provided is a Prefix',
+    description: '[Default] The DNID string provided is a\nPrefix',
     exclusive: ['expression', 'regex', 'legacy']
   }),
   legacy: flags.boolean({
-    description: 'The DNID string provided is an Asterisk style extensions matching format',
+    description: 'The DNID string provided is an Asterisk style\nextensions matching format',
     exclusive: ['expression', 'prefix', 'regex']
   }),
   enable: flags.boolean({

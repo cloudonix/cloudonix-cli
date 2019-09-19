@@ -59,10 +59,12 @@ class DomainsCommand extends Command {
 }
 
 DomainsCommand.description = `Manage Cloudonix tenant domains data models
-A Cloudonix Tenant may have multiple domains associated with it. While a single tenant may 
-have multiple domains, communications or inter-domain data sharing is not available. Domains
-are treated as discrete logical elments. Domains may have applications, DNIDs, trunks and 
-subscribers associated to them.
+
+A Cloudonix Tenant may have multiple domains associated with it. While 
+a single tenant may have multiple domains, communications or 
+inter-domain data sharing is not available. Domains are treated as 
+discrete logical elments. Domains may have applications, DNIDs, trunks 
+and subscribers associated to them.
 `;
 
 DomainsCommand.usage = `domains COMMAND [OPTIONS]`;
@@ -70,22 +72,22 @@ DomainsCommand.usage = `domains COMMAND [OPTIONS]`;
 DomainsCommand.flags = {
   tenant: flags.string({description: 'Tenant name or id', exclusive: ['self']}),
   self: flags.boolean({
-    description: '[default] Refer to the tenant indicated by the configured API key',
+    description: '[default] Refer to the tenant indicated by\nthe configured API key',
     exclusive: ['tenant']
   }),
   name: flags.string({description: 'Domain name, aka: namespace'}),
   id: flags.integer({description: 'Domain ID, aka: namespace ID'}),
-  newname: flags.string({description: 'Rename --name to --newname (used with `update` action)'}),
-  active: flags.boolean({description: 'Set the domain as Active or Inactive (used with `config` action)'}),
-  regfree: flags.boolean({description: 'Set the domain as RegistrationFree enabled or disabled (used with `config` action)'}),
-  app: flags.integer({description: 'Set the domain default application ID (used with `config` action)'}),
-  'set': flags.boolean({description: 'Set alias or key:value pair (used with `config` action)', exclusive: ['unset']}),
-  unset: flags.boolean({description: 'Unset alias or key:value pair (used with `config` action)', exclusive: ['set']}),
-  alias: flags.string({description: 'Set or unset a domain alias for domain (used with `config` action) or get domain by alias (used with `get` action)'}),
-  aliases: flags.boolean({description: 'Get list of domain aliases (used with `get` action)'}),
-  pair: flags.string({description: 'Set a domain profile key:value pair, as designated by `pair` and `value` (used with `config` action)'}),
+  newname: flags.string({description: 'Rename --name to --newname\n(used with `update` action)'}),
+  active: flags.boolean({description: 'Set the domain as Active or Inactive\n(used with `config` action)'}),
+  regfree: flags.boolean({description: 'Set the domain as RegistrationFree\nenabled or disabled (used with `config` action)'}),
+  app: flags.integer({description: 'Set the domain default application ID\n(used with `config` action)'}),
+  'set': flags.boolean({description: 'Set alias or key:value pair\n(used with `config` action)', exclusive: ['unset']}),
+  unset: flags.boolean({description: 'Unset alias or key:value pair\n(used with `config` action)', exclusive: ['set']}),
+  alias: flags.string({description: 'Set or unset a domain alias for domain\n(used with `config` action) or get domain\nby alias (used with `get` action)'}),
+  aliases: flags.boolean({description: 'Get list of domain aliases\n(used with `get` action)'}),
+  pair: flags.string({description: 'Set a domain profile key:value\npair, as designated by `pair` and `value`\n(used with `config` action)'}),
   value: flags.string({
-    description: 'Assign the `value` to the new profile key:value pair, designated by `pair` (used with `config` action)',
+    description: 'Assign the `value` to the new profile key:value\npair, designated by `pair`\n(used with `config` action)',
     dependsOn: ['pair']
   }),
 };
@@ -109,8 +111,8 @@ DomainsCommand.args = [
 DomainsCommand.examples = [
   'Get list of domains and their information\n$ cloudonix-cli domains get\n',
   'Get domain information\n$ cloudonix-cli domains get --name=mydomain.cloudonix.io\n',
-  'Set a domain alias\n$ cloudonix-cli domains config --name=mydomain.cloudonix.io --set --alias=alias.cloudonix.io\n',
-  'Disable a domain\n$ cloudonix-cli domains config --name=mydomain.cloudonix.io --unset --active\n',
+  'Set a domain alias\n$ cloudonix-cli domains config --name=mydomain.cloudonix.io --set \\\n--alias=alias.cloudonix.io\n',
+  'Disable a domain\n$ cloudonix-cli domains config --name=mydomain.cloudonix.io --unset \\\n--active\n',
 ];
 
 module.exports = DomainsCommand;

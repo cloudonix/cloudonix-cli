@@ -77,11 +77,11 @@ ApikeyCommand.usage = "apikeys COMMAND [OPTIONS]";
 ApikeyCommand.flags = {
   tenant: flags.string({description: 'Tenant name or ID', exclusive: ['self']}),
   self: flags.boolean({
-    description: '[default] Refer to the tenant indicated by the configured API key',
+    description: '[default] Refer to the tenant indicated by\nthe configured\nAPI key',
     exclusive: ['tenant']
   }),
-  domain: flags.string({description: '[Default: Environment Variable] Domain name or domain ID associated to the API key'}),
-  application: flags.string({description: 'Application name or ID associated to the API key'}),
+  domain: flags.string({description: '[Default: Environment Variable] Domain name\nor domain ID associated to the API key'}),
+  application: flags.string({description: 'Application name or ID associated to the\nAPI key'}),
   name: flags.string({description: 'A string value, representing the API key'}),
 };
 

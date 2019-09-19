@@ -73,11 +73,13 @@ class TenantCommand extends Command {
 }
 
 TenantCommand.description = `Manage Cloudonix tenant data model
-A tenant represents the highest level of authorization a Cloudonix platform customer can 
-have. Tenants maintain multiple sets of domains, applications, trunks, DNIDs and more.
 
-The 'tenant' module enables the tenant administrator to query the tenant configuration
-and control various teant related settings.
+A tenant represents the highest level of authorization a Cloudonix 
+platform customer can have. Tenants maintain multiple sets of 
+domains, applications, trunks, DNIDs and more.
+
+The 'tenant' module enables the tenant administrator to query the 
+tenant configuration and control various teant related settings.
 `;
 
 TenantCommand.usage = "tenant COMMAND [OPTIONS]";
@@ -85,14 +87,14 @@ TenantCommand.usage = "tenant COMMAND [OPTIONS]";
 TenantCommand.flags = {
   name: flags.string({description: 'Tenant name', exclusive: ['id', 'self']}),
   id: flags.integer({description: 'Tenant ID', exclusive: ['name', 'self']}),
-  self: flags.boolean({description: '[default] Refer to the tenant indicated by the configured API key', exclusive: ['id', 'name']}),
+  self: flags.boolean({description: '[default] Refer to the tenant indicated\nby the configured API key', exclusive: ['id', 'name']}),
   generate: flags.string({description: 'Generate a new API key, and set its name'}),
   revoke: flags.string({description: 'Revoke an API key, indicated by its name'}),
   keyid: flags.integer({description: 'Get API key information',  exclusive: ['keylist']}),
   keylist: flags.boolean({description: '[default] Get API key list', exclusive: ['keyid']}),
-  setpair: flags.string({description: 'Set a tenant settings key:value pair, as designated by `addpair` and `value`'}),
-  delpair: flags.string({description: 'Delete a tenant settings key:value pair, as designated by `delkey`'}),
-  value: flags.string({description: 'Assign the `value` to the new settings pair, designated by `addpair`',dependsOn: ['addpair']}),
+  setpair: flags.string({description: 'Set a tenant settings key:value pair,\nas designated by `addpair` and `value`'}),
+  delpair: flags.string({description: 'Delete a tenant settings key:value pair,\nas designated by `delkey`'}),
+  value: flags.string({description: 'Assign the `value` to the new settings pair,\ndesignated by `addpair`',dependsOn: ['addpair']}),
 };
 
 TenantCommand.args = [
@@ -108,7 +110,7 @@ TenantCommand.args = [
 TenantCommand.examples = [
   'Get my tenant information\n$ cloudonix-cli tenant get --self\n',
   'List all tenant associated API keys (all types)\n$ cloudonix-cli tenant apikey --getkey --self\n',
-  'Add a tenant setting to your tenant\n$ cloudonix-cli tenant settings --addpair=new-key --value=new-value --self\n',
+  'Add a tenant setting to your tenant\n$ cloudonix-cli tenant settings --addpair=new-key \\\n--value=new-value --self\n',
 ];
 
 module.exports = TenantCommand;

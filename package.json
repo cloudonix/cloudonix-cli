@@ -1,7 +1,7 @@
 {
   "name": "@nir.simionovich/cloudonix-cli",
   "description": "A CLI tool for the Cloudonix API.Core",
-  "version": "0.1.1",
+  "version": "0.1.5",
   "author": "Nir Simionovich",
   "bin": {
     "@nir.simionovich/cloudonix-cli": "bin/cloudonix-cli",

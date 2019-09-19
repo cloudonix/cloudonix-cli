@@ -55,11 +55,15 @@ class UsersCommand extends Command {
 
 UsersCommand.description = `Manage Cloudonix users. 
 
-Users are identified by e-Mail addresses, that can be authenticated. using either Google, Facebook, 
-Github or Microsoft365 authentication providers. Users may be associated with a tenant or a domain. 
-Once a user is associated with a domain, it has access to domain related data models only.
+Users are identified by e-Mail addresses, that can be authenticated 
+using either Google, Facebook, Github or Microsoft365 authentication 
+providers. Users may be associated with a tenant or a domain. 
 
-The 'users' module enables the tenant administrator to manage the tenants trunks.
+Once a user is associated with a domain, it has access to domain 
+related data models only.
+
+The 'users' module enables the tenant administrator to manage the 
+tenants associated users and domain associated users.
 `;
 
 UsersCommand.usage = "users COMMAND [OPTIONS]";
@@ -67,11 +71,11 @@ UsersCommand.usage = "users COMMAND [OPTIONS]";
 UsersCommand.flags = {
   tenant: flags.string({description: 'Tenant name or ID', exclusive: ['self']}),
   self: flags.boolean({
-    description: '[default] Refer to the tenant indicated by the configured API key',
+    description: '[default] Refer to the tenant indicated by\nthe configured API key',
     exclusive: ['tenant']
   }),
-  domain: flags.string({description: 'Domain name or domain ID associated to the username, if not specified - refernce to Tenant user'}),
-  username: flags.string({description: 'Username to create or revoke. A username MUST be a valid e-Mail address'}),
+  domain: flags.string({description: 'Domain name or domain ID associated to the\nusername, if not specified - reference\nto Tenant user'}),
+  username: flags.string({description: 'Username to create or revoke. A username MUST be\na valid e-Mail address'}),
 };
 
 UsersCommand.args = [
@@ -84,14 +88,13 @@ UsersCommand.args = [
 \x1b[33mcreate\x1b[0m    Create user
 \x1b[33mrevoke\x1b[0m    Delete user`,
     default: 'get',                     // default value if no arg input
-    options: ['get', 'create', 'update', 'revoke', 'wizard'],        // only allow input to be from a discrete set
+    options: ['get', 'create', 'update', 'revoke'],        // only allow input to be from a discrete set
   }
 ];
 
 UsersCommand.examples = [
-  'Get list of trunks and their information\n$ cloudonix-cli trunks get --domain=mydomain.org\n',
-  'Get trunk information\n$ cloudonix-cli trunks get --self  --domain=mydomain.org --name=my-trunk-name\n',
-  'Revoke a trunk\n$ cloudonix-cli trunks revoke --self  --domain=mydomain.org --name=my-trunk-name\n',
+  'Get list of users and their information\n$ cloudonix-cli users get --self --domain=mydomain.org\n',
+  'Revoke a user\n$ cloudonix-cli users revoke --self --domain=mydomain.org \\\n--username=my-username@mydomain.com\n',
 ];
 
 module.exports = UsersCommand;

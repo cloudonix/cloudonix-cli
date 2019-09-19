@@ -70,8 +70,9 @@ ConfigCommand.args = [
     required: true,            // make the arg required with `required: true`
     description: `Command to execute
     
-\x1b[33mget\x1b[0m       (Default) Get trunk of list of
-\x1b[33mset\x1b[0m       Set your Cloudonix CLI tool configuration (file: ~/.env.cloudonix.cli`, // help description
+\x1b[33mget\x1b[0m       (Default) Get CLI tool configuration
+\x1b[33mset\x1b[0m       Set your CLI tool configuration
+          (file: ~/.env.cloudonix.cli`, // help description
     default: 'get',           // default value if no arg input
     options: ['get', 'set'],        // only allow input to be from a discrete set
   }

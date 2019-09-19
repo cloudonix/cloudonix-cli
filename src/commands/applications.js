@@ -219,9 +219,11 @@ class ApplicationsCommand extends Command {
 }
 
 ApplicationsCommand.description = `Manage Cloudonix applications data model
-An application represents a logic element, implementing one of Cloudonix's Voice or SMS application APIs.
+An application represents a logic element, implementing one of
+Cloudonix's Voice or SMS application APIs.
 
-The 'applications' module enables the tenant administrator to manage the tenants applications.
+The 'applications' module enables the tenant administrator to 
+manage the tenants applications.
 `;
 
 ApplicationsCommand.usage = "applications COMMAND [OPTIONS]";
@@ -229,10 +231,10 @@ ApplicationsCommand.usage = "applications COMMAND [OPTIONS]";
 ApplicationsCommand.flags = {
   tenant: flags.string({description: 'Tenant name or ID', exclusive: ['self']}),
   self: flags.boolean({
-    description: '[Default] Refer to the tenant indicated by the configured API key',
+    description: '[Default] Refer to the tenant indicated by the\nconfigured API key',
     exclusive: ['tenant']
   }),
-  domain: flags.string({description: '[Default: Environment Variable] Domain name or domain ID associated to the application'}),
+  domain: flags.string({description: '[Default: Environment Variable] Domain name \nor domain ID associated to the application'}),
   name: flags.string({description: 'Application name'}),
   id: flags.integer({description: 'Application ID'}),
   url: flags.string({description: 'Application remote URL'}),
@@ -261,7 +263,7 @@ ApplicationsCommand.args = [
 \x1b[33mcreate\x1b[0m    Create application
 \x1b[33mupdate\x1b[0m    Update application
 \x1b[33mrevoke\x1b[0m    Delete application
-\x1b[33mwizard\x1b[0m    Application wizard - connect with verified compatible application providers or create a custom app`,
+\x1b[33mwizard\x1b[0m    Application wizard - connect with verified compatible\napplication providers or create a custom app`,
 
     default: 'get',                     // default value if no arg input
     options: ['get', 'create', 'update', 'revoke', 'wizard'],        // only allow input to be from a discrete set
@@ -270,9 +272,9 @@ ApplicationsCommand.args = [
 
 ApplicationsCommand.examples = [
   'Get list of applications and their information\n$ cloudonix-cli applications get --domain=mydomain.org\n',
-  'Get application information\n$ cloudonix-cli applications get --self --domain=mydomain.org --name=my-app-name\n',
-  'Create an application\n$ cloudonix-cli applications create --self --domain=mydomain.org --name=my-app-name --type=cloudonix --url=https://myurl.com/script\n',
-  'Revoke an application\n$ cloudonix-cli applications revoke --self --domain=mydomain.org --name=my-app-name\n',
+  'Get application information\n$ cloudonix-cli applications get --self --domain=mydomain.org \\\n--name=my-app-name\n',
+  'Create an application\n$ cloudonix-cli applications create --self --domain=mydomain.org \\\n--name=my-app-name --type=cloudonix --url=https://myurl.com/script\n',
+  'Revoke an application\n$ cloudonix-cli applications revoke --self --domain=mydomain.org \\\n--name=my-app-name\n',
 ];
 
 module.exports = ApplicationsCommand;
