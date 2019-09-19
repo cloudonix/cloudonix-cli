@@ -13,6 +13,7 @@
 const CloudonixApi = require('../lib/CloudonixApi').constructor();
 const CloudonixCoreDatamodel = require('./CoreModel');
 const CurrentDatamodel = 'users';
+var InputValidator = require('validator');
 
 class UsersDatamodel extends CloudonixCoreDatamodel {
 
@@ -37,14 +38,14 @@ class UsersDatamodel extends CloudonixCoreDatamodel {
     try {
       this._modelQueryPath = CloudonixApi._users.setTenant(CurrentDatamodel, this._modelTenant, flags.domain);
 
-      if (typeof flags.username != 'undefined') {
+      if ((typeof flags.username != 'undefined') && (InputValidator.isEmail(flags.username))) {
         flags.email = flags.username;
         delete flags.username;
         delete flags.domain;
       } else {
         return {
           status: 500,
-          message: 'Missing arguments --username',
+          message: 'Missing arguments --username or provided input is not an email address',
         }
       }
 
@@ -63,7 +64,7 @@ class UsersDatamodel extends CloudonixCoreDatamodel {
       if (typeof flags.username == 'undefined') {
         return {
           status: 500,
-          message: 'Missing arguments --username',
+          message: 'Missing arguments --username or provided input is not an email address',
         }
       }
 

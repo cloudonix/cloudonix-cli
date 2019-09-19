@@ -24,7 +24,8 @@
     "generate-password": "^1.4.2",
     "inquirer": "^7.0.0",
     "ncp": "^2.0.0",
-    "prettyjson": "^1.2.1"
+    "prettyjson": "^1.2.1",
+    "validator": "^11.1.0"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.22.2",
