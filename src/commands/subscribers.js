@@ -89,7 +89,11 @@ SubscribersCommand.flags = {
     exclusive: ['enable']
   }),
   password: flags.string({
-    description: '[Default: auto-generated] An assigned password for\nthe subscriber.'
+    description: '[Default: Empty Password] An assigned password for\nthe subscriber.'
+  }),
+  autogenerate: flags.boolean({
+    description: 'Autogenerate a SIP password',
+    default: false
   }),
   reset: flags.boolean({
     description: 'Reset a subscribers SIP password'

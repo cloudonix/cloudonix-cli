@@ -42,8 +42,11 @@ class SubscribersDatamodel extends CloudonixCoreDatamodel {
         }
       }
 
-      if (typeof flags.password === 'undefined') {
+      if (flags.autogenerate) {
         flags['sip-password'] = passwordGenerator.generate({length: 32, numbers: true, uppercase: true, symbols: false});
+        delete flags.autogenerate;
+      } else if (typeof flags.password === 'undefined') {
+        flags['sip-password'] = '';
       } else {
         flags['sip-password'] = flags.password;
         delete flags.password;
