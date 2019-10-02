@@ -29,8 +29,8 @@ class ConfigHelper {
       myEnvironmentPath = process.env.HOME + '/' + environmentFilename;
     } else if (fs.existsSync(process.env.PWD + '/' + environmentFilename)) {
       myEnvironmentPath =  process.env.PWD + '/' + environmentFilename;
-    } else if (fs.existsSync(myEnv.CXCLI)) {
-      myEnvironmentPath =  process.env.CXCLI;
+    } else if (fs.existsSync(process.env.CXCLI + '/' + environmentFilename)) {
+      myEnvironmentPath =  process.env.CXCLI + '/' + environmentFilename;
     } else {
       return false;
     }
