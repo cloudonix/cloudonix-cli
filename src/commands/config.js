@@ -56,7 +56,18 @@ class ConfigCommand extends Command {
   }
 }
 
-ConfigCommand.description = `Manage Cloudonix CLI tenant information`;
+ConfigCommand.description = `Manage Cloudonix CLI configuration and setup
+
+The Cloudonix CLI maintains a configuration file named 
+.env.cloudonix.cli - normally located under your home directory.
+If not found, the CLI tool will continue to look for a similar 
+file under your current directory. A third option is to setup an 
+environment variable called CXCLI, which will point to a configuration 
+file of your choice. 
+
+* Multiple configuration files and/or environments are currently not 
+supported.
+`;
 
 ConfigCommand.flags = {
   apikey: flags.string({description: 'Cloudonix API key'}),
