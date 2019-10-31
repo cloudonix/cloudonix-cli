@@ -33,6 +33,42 @@ class DomainsApi extends Api {
     }
   }
 
+  static async getByAlias(alias) {
+    try {
+      var queryPath = this._modelQueryPath + "/alias/" + alias;
+      var response = await this._modelHttpConnector.httpConnector.get(queryPath);
+      return {
+        status: response.status,
+        message: response.statusText,
+        data: response.data
+      };
+    } catch (error) {
+      return {
+        status: error.response.status,
+        message: error.response.statusText,
+        data: false
+      };
+    }
+  }
+
+  static async getAliases(domainName) {
+    try {
+      var queryPath = this._modelQueryPath + "/" + domainName + "/aliases";
+      var response = await this._modelHttpConnector.httpConnector.get(queryPath);
+      return {
+        status: response.status,
+        message: response.statusText,
+        data: response.data
+      };
+    } catch (error) {
+      return {
+        status: error.response.status,
+        message: error.response.statusText,
+        data: false
+      };
+    }
+  }
+
   static async create(domainName) {
     try {
       var response = await this._modelHttpConnector.httpConnector.post(this._modelQueryPath, {domain: domainName});
@@ -89,32 +125,59 @@ class DomainsApi extends Api {
   static async config(domainName, configOperation, configObject) {
     try {
 
-      console.log(configObject);
 
       var queryPath = this._modelQueryPath + "/" + domainName;
       var response;
-      if (configOperation) {
-        /* Set Operations */
+      switch (Object.keys(configObject)[0]) {
+        case "alias":
+          if (configOperation) {
+            /* Set Operation */
 
-      } else {
-        /* Unset Operations */
-        switch(Object.keys(configObject)[0]) {
-          case "alias":
+          } else {
+            /* Unset Operation */
             response = await this._modelHttpConnector.httpConnector.delete(queryPath + "/aliases/" + configObject.alias);
-            break;
-          case "active":
+          }
+          break;
+        case "active":
+          if (configOperation) {
+            /* Set Operation */
+          } else {
+            /* Unset Operation */
             response = await this._modelHttpConnector.httpConnector.put(queryPath, { active: false });
-            break;
-          case "pair":
-            break;
-        }
+          }
+          break;
+        case "pair":
+          if (configOperation) {
+            /* Set Operation */
+          } else {
+            /* Unset Operation */
+          }
+          break;
       }
 
       /*
-      var response = await this._modelHttpConnector.httpConnector.put(this._modelQueryPath + "/" + domainName,
-        {domain: newDomainName}
-      );
-      */
+       if (configOperation) {
+
+       } else {
+       switch(Object.keys(configObject)[0]) {
+       case "alias":
+       response = await this._modelHttpConnector.httpConnector.delete(queryPath + "/aliases/" + configObject.alias);
+       break;
+       case "active":
+       response = await this._modelHttpConnector.httpConnector.put(queryPath, { active: false });
+       break;
+       case "pair":
+       break;
+       }
+       }
+       */
+
+      /*
+       var response = await this._modelHttpConnector.httpConnector.put(this._modelQueryPath + "/" + domainName,
+       {domain: newDomainName}
+       );
+       */
+
       return {
         status: response.status,
         message: response.statusText,

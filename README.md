@@ -15,11 +15,11 @@ A CLI tool for the Cloudonix API.Core
 # Usage
 <!-- usage -->
 ```sh-session
-$ npm install -g @nir.simionovich/cloudonix-cli
+$ npm install -g @cloudonix.io/cloudonix-cli
 $ cloudonix-cli COMMAND
 running command...
 $ cloudonix-cli (-v|--version|version)
-@nir.simionovich/cloudonix-cli/0.1.8 darwin-x64 node-v11.13.0
+@cloudonix.io/cloudonix-cli/0.1.9 darwin-x64 node-v11.13.0
 $ cloudonix-cli --help [COMMAND]
 USAGE
   $ cloudonix-cli COMMAND
@@ -97,7 +97,7 @@ EXAMPLES
      --name=my-key-name
 ```
 
-_See code: [src/commands/apikeys.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.8/src/commands/apikeys.js)_
+_See code: [src/commands/apikeys.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.9/src/commands/apikeys.js)_
 
 ## `cloudonix-cli applications COMMAND [OPTIONS]`
 
@@ -163,7 +163,7 @@ EXAMPLES
   --name=my-app-name
 ```
 
-_See code: [src/commands/applications.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.8/src/commands/applications.js)_
+_See code: [src/commands/applications.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.9/src/commands/applications.js)_
 
 ## `cloudonix-cli config COMMAND`
 
@@ -197,7 +197,7 @@ DESCRIPTION
   supported.
 ```
 
-_See code: [src/commands/config.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.8/src/commands/config.js)_
+_See code: [src/commands/config.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.9/src/commands/config.js)_
 
 ## `cloudonix-cli dnids COMMAND [OPTIONS]`
 
@@ -259,7 +259,7 @@ DESCRIPTION
   tenant DNID application routing.
 ```
 
-_See code: [src/commands/dnids.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.8/src/commands/dnids.js)_
+_See code: [src/commands/dnids.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.9/src/commands/dnids.js)_
 
 ## `cloudonix-cli domains COMMAND [OPTIONS]`
 
@@ -345,7 +345,7 @@ EXAMPLES
   --active
 ```
 
-_See code: [src/commands/domains.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.8/src/commands/domains.js)_
+_See code: [src/commands/domains.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.9/src/commands/domains.js)_
 
 ## `cloudonix-cli help [COMMAND]`
 
@@ -425,7 +425,7 @@ EXAMPLES
   --msisdn=123455777
 ```
 
-_See code: [src/commands/subscribers.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.8/src/commands/subscribers.js)_
+_See code: [src/commands/subscribers.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.9/src/commands/subscribers.js)_
 
 ## `cloudonix-cli tenant COMMAND [OPTIONS]`
 
@@ -483,7 +483,7 @@ EXAMPLES
   --value=new-value --self
 ```
 
-_See code: [src/commands/tenant.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.8/src/commands/tenant.js)_
+_See code: [src/commands/tenant.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.9/src/commands/tenant.js)_
 
 ## `cloudonix-cli trunks COMMAND [OPTIONS]`
 
@@ -545,7 +545,7 @@ EXAMPLES
   $ cloudonix-cli trunks revoke --self  --domain=mydomain.org --name=my-trunk-name
 ```
 
-_See code: [src/commands/trunks.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.8/src/commands/trunks.js)_
+_See code: [src/commands/trunks.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.9/src/commands/trunks.js)_
 
 ## `cloudonix-cli users COMMAND [OPTIONS]`
 
@@ -595,5 +595,5 @@ EXAMPLES
   --username=my-username@mydomain.com
 ```
 
-_See code: [src/commands/users.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.8/src/commands/users.js)_
+_See code: [src/commands/users.js](https://github.com/cloudonix/cloudonix-cli/blob/v0.1.9/src/commands/users.js)_
 <!-- commandsstop -->

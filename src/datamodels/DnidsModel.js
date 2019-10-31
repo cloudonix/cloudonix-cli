@@ -28,7 +28,6 @@ class DnidsDatamodel extends CloudonixCoreDatamodel {
           'application-lookup',
           [{ param: 'search', value: flags.dnid}]
         );
-        console.log(this._modelQueryPath);
 
         response = await CloudonixApi._dnids.get();
       } else {

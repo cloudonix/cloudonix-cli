@@ -28,7 +28,22 @@ class DomainsDataModel extends CloudonixCoreDatamodel {
       var domainAlias = (typeof flags.alias != "undefined") ? flags.alias : false;
       var domainAliases = (typeof flags.aliases != "undefined") ? flags.aliases : false;
 
-      var response = (!domainName) ? await CloudonixApi._domains.get() : await CloudonixApi._domains.get(domainName);
+      var response;
+      if (domainAlias) {
+        /* Search domain by domain alias */
+        response = await CloudonixApi._domains.getByAlias(domainAlias);
+      } else if (domainAliases) {
+        /* List domain aliases for a specific domain name */
+        if (!domainName) {
+          return {
+            status: 500,
+            message: 'Missing argument --name or --id',
+          }
+        }
+        response = await CloudonixApi._domains.getAliases(domainName);
+      } else {
+        response = (!domainName) ? await CloudonixApi._domains.get() : await CloudonixApi._domains.get(domainName);
+      }
 
       return response;
     } catch (error) {
@@ -135,6 +150,8 @@ class DomainsDataModel extends CloudonixCoreDatamodel {
       } else {
         response = await CloudonixApi._domains.config(domainName, false, configObjectUnset);
       }
+
+      console.log(response);
 
       return response;
     } catch (error) {

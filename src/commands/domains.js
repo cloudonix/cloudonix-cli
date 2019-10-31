@@ -77,19 +77,19 @@ DomainsCommand.flags = {
   }),
   name: flags.string({description: 'Domain name, aka: namespace'}),
   id: flags.integer({description: 'Domain ID, aka: namespace ID'}),
-  newname: flags.string({description: 'Rename --name to --newname\n(used with `update` action)'}),
+  aliases: flags.boolean({description: 'Get list of domain aliases\n(used with `get` action)'}),
+
+  // Update flags
+  rename: flags.string({description: 'Rename --name to --rename\n(used with `update` action)'}),
+
+  // Config flags
   active: flags.boolean({description: 'Set the domain as Active or Inactive\n(used with `config` action)'}),
   regfree: flags.boolean({description: 'Set the domain as RegistrationFree\nenabled or disabled (used with `config` action)'}),
   app: flags.integer({description: 'Set the domain default application ID\n(used with `config` action)'}),
-  'set': flags.boolean({description: 'Set alias or key:value pair\n(used with `config` action)', exclusive: ['unset']}),
-  unset: flags.boolean({description: 'Unset alias or key:value pair\n(used with `config` action)', exclusive: ['set']}),
+  'set': flags.boolean({description: 'Set alias or profile key:value pair\n(used with `config` action)', exclusive: ['unset']}),
+  unset: flags.boolean({description: 'Unset alias or profile key:value pair\n(used with `config` action)', exclusive: ['set']}),
   alias: flags.string({description: 'Set or unset a domain alias for domain\n(used with `config` action) or get domain\nby alias (used with `get` action)'}),
-  aliases: flags.boolean({description: 'Get list of domain aliases\n(used with `get` action)'}),
-  pair: flags.string({description: 'Set a domain profile key:value\npair, as designated by `pair` and `value`\n(used with `config` action)'}),
-  value: flags.string({
-    description: 'Assign the `value` to the new profile key:value\npair, designated by `pair`\n(used with `config` action)',
-    dependsOn: ['pair']
-  }),
+  'var': flags.string({description: 'Set a domain profile key:value\npair. Eg: key|value. (used with `config` action)' }),
 };
 
 DomainsCommand.args = [

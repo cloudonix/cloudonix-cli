@@ -37,8 +37,7 @@ class ConfigCommand extends Command {
 
         var configObject = {
           apikey: flags.apikey,
-          sandbox: flags.sandbox,
-          domain: flags.domain
+          sandbox: flags.sandbox
         };
 
         if (!ConfigHelper.setConfiguration(configObject)) {
@@ -71,8 +70,7 @@ supported.
 
 ConfigCommand.flags = {
   apikey: flags.string({description: 'Cloudonix API key'}),
-  sandbox: flags.boolean({description: 'Enable/Disable sandbox operations', default: false}),
-  domain: flags.string({description: 'Cloudonix default domain'})
+  sandbox: flags.boolean({description: 'Enable/Disable sandbox operations', default: false})
 };
 
 ConfigCommand.args = [

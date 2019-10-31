@@ -49,10 +49,6 @@ class ConfigHelper {
       return false;
     }
 
-    if (typeof configuration.parsed.DOMAIN === 'undefined') {
-      return false;
-    }
-
     return configuration.parsed;
   }
 
@@ -61,8 +57,6 @@ class ConfigHelper {
     environment += (!configObject['apikey']) ? '' : 'APIKEY=' + configObject['apikey'];
     environment += "\n";
     environment += (!configObject['sandbox']) ? 'ENDPOINT=' + endpointProduction : 'ENDPOINT=' + endpointSandbox;
-    environment += "\n";
-    environment += (!configObject['domain']) ? 'DOMAIN=' + configObject['domain'] : 'DOMAIN=' + configObject['domain'];
     environment += "\n";
 
     fs.writeFileSync(process.env.HOME + '/' + environmentFilename, environment, {mode: 0o644, flag: 'w'});
@@ -75,7 +69,6 @@ class ConfigHelper {
     console.log("");
     console.log("\x1b[33mAPIKEY:\x1b[0m " + Configuration.APIKEY);
     console.log("\x1b[33mENDPOINT:\x1b[0m " + Configuration.ENDPOINT);
-    console.log("\x1b[33mDOMAIN:\x1b[0m " + Configuration.DOMAIN);
   }
 }
 
