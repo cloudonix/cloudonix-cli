@@ -125,13 +125,6 @@ class DomainsDataModel extends CloudonixCoreDatamodel {
         configObjectSet.defaultApplication = flags.app;
         configObjectUnset = (configUnset) ? { defaultApplication: flags.app } : false;
       }
-      if (typeof flags.pair != "undefined") {
-        configObjectSet.pair = flags.pair;
-        configObjectUnset = (configUnset) ? { pair: flags.pair } : false;
-      }
-      if (typeof flags.value != "undefined") {
-        configObjectSet.value = flags.value;
-      }
 
       /* Data Validation */
       if (Object.keys(configObjectSet).length == 0) {
